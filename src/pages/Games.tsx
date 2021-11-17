@@ -23,10 +23,10 @@ import axios from 'axios'
 import { useState, useEffect } from 'react';
 
 // const iotabotsContractAddress = "0x6c2D60145cDD0396bd03298693495bf98fcdD93E"; // LIVE
-const iotabotsContractAddress = "0x639D119919047EA5b52dAfFD17B30B5A5fc177B4"; // Test
+const iotabotsContractAddress = "0x866fe4fcA79A98825eE0eB566C62c1f11B9aB461"; // Test
 
 
-const gameContractAddress = "0xD6554224E2a6Af48E337387B504C5924a2BB65B7"; // GameTest
+const gameContractAddress = "0x6d6C7a7016d6FdeD000d2E74840131b13F33fDC0"; // GameTest
 
 export default function Games() {
 
@@ -186,7 +186,7 @@ export default function Games() {
                         setWinner({ message: `Player: ${player_symbol} Bot: ${bot_symbol} --- Bot won! 🤖` });
                     } else {
                         console.log("Draw!")
-                        setWinner({ message: "Draw!" });
+                        setWinner({ message: `Player: ${player_symbol} Bot: ${bot_symbol} --- Draw!` });
                     }
                 }
                 setLoading(false);
@@ -295,7 +295,7 @@ export default function Games() {
                         color="#fff"
                         gutterBottom
                     >
-                        Games
+                        IOTABOTS Games
                     </Typography>
                     {/* End hero unit */}
                     {content}

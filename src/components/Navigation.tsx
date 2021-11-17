@@ -93,7 +93,18 @@ export default function PrimarySearchAppBar() {
                         };
                     }}
                     to="/games">
-                    Games
+                    IOTABOTS
+                </NavLink>
+            </MenuItem>
+            <MenuItem>
+                <NavLink
+                    style={({ isActive }) => {
+                        return {
+                            color: isActive ? "#02c692" : ""
+                        };
+                    }}
+                    to="/spacebots">
+                    Spacebots
                 </NavLink>
             </MenuItem>
             <MenuItem>
@@ -163,7 +174,21 @@ export default function PrimarySearchAppBar() {
                                 };
                             }}
                             className="nav-link" to="/games">
-                            Games
+                            IOTABOTS
+                        </NavLink>
+                    </Box>
+                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                        |
+                    </Box>
+                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                        <NavLink
+                            style={({ isActive }) => {
+                                return {
+                                    color: isActive ? "#02c692" : ""
+                                };
+                            }}
+                            className="nav-link" to="/spacebots">
+                            Spacebots
                         </NavLink>
                     </Box>
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>

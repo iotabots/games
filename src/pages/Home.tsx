@@ -8,10 +8,9 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { NavLink } from "react-router-dom";
+import spacebots_img from "../assets/images/Game.png";
 
 export default function Home() {
-
-    const cards = [0, 1, 2, 3, 4, 5];
 
     return (
         <>
@@ -63,44 +62,72 @@ export default function Home() {
                         color="#fff"
                         gutterBottom
                     >
-                        Available Bots
+                        Available Games
                     </Typography>
                     {/* End hero unit */}
                     <Grid container spacing={4}>
-                        {cards.map((card, index) => (
-                            <Grid item key={card} xs={12} sm={6} md={4}>
+
+                        <Grid item key={1} xs={12} sm={12} md={6}>
+                            <NavLink to="/games">
                                 <Card
                                     sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                                 >
                                     <CardMedia
                                         component="img"
                                         sx={{
+                                            maxHeight: '280px',
+                                            minHeight: '280px',
+                                            padding: '10px'
                                             // 16:9
                                             // pt: '56.25%',
                                         }}
-                                        image={`http://assets.iotabots.io/${index + 1}.png`}
+                                        image={`http://assets.iotabots.io/${1}.png`}
                                         alt="IOTABOT"
                                     />
                                     <CardContent sx={{ flexGrow: 1 }}>
                                         <Typography gutterBottom variant="h6" component="h3">
-                                            {`IOTABOT #${index + 1}`}
+                                            {`IOTABOTS `}
                                         </Typography>
+                                        <Typography gutterBottom variant="body1" component="p">
+                                            {`Rock Paper & Scissors `}
+                                        </Typography>
+                                    </CardContent>
 
+                                </Card>
+                            </NavLink>
+                        </Grid>
+
+                        <Grid item key={1} xs={12} sm={12} md={6}>
+                            <NavLink to="/spacebots">
+
+                                <Card
+                                    sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                                >
+                                    <CardMedia
+                                        component="img"
+                                        sx={{
+                                            maxHeight: '280px',
+                                            minHeight: '280px',
+                                            padding: '10px'
+                                            // 16:9
+                                            // pt: '56.25%',
+                                        }}
+                                        image={spacebots_img}
+                                        alt="Spacebots"
+                                    />
+                                    <CardContent sx={{ flexGrow: 0 }}>
+                                        <Typography gutterBottom variant="h6" component="h3">
+                                            {`Spacebots `}
+                                        </Typography>
+                                        <Typography gutterBottom variant="body1" component="p">
+                                            {`Discover the Space `}
+                                        </Typography>
                                     </CardContent>
                                 </Card>
-                            </Grid>
-                        ))}
+                            </NavLink>
+                        </Grid>
                     </Grid>
-
                 </Container>
-                <Container sx={{ py: 8 }} maxWidth="md"  >
-                    <Typography align="center" gutterBottom variant="button" component="h1">
-                        <NavLink to="/bots">
-                            Discover all 500 IOTABOTS
-                        </NavLink>
-                    </Typography>
-                </Container>
-
             </main>
         </>
     );

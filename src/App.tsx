@@ -6,6 +6,7 @@ import Footer from './components/Footer'
 
 import Home from './pages/Home'
 import Games from './pages/Games'
+import Spacebots from './pages/Spacebots'
 import Profile from './pages/Profile'
 
 import './App.css';
@@ -47,6 +48,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="games" element={<Games />} />
+          <Route path="spacebots" element={<Spacebots />} />
           <Route path="profile" element={<Profile />} />
         </Routes>
         <Footer />
