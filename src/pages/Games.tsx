@@ -23,10 +23,10 @@ import axios from 'axios'
 import { useState, useEffect } from 'react';
 
 // const iotabotsContractAddress = "0x6c2D60145cDD0396bd03298693495bf98fcdD93E"; // LIVE
-const iotabotsContractAddress = "0x866fe4fcA79A98825eE0eB566C62c1f11B9aB461"; // Test
+const iotabotsContractAddress = "0x05646c5F4B60F255bef81531f536C6f552b58057"; // Test
 
 
-const gameContractAddress = "0x6d6C7a7016d6FdeD000d2E74840131b13F33fDC0"; // GameTest
+const gameContractAddress = "0xC764edd35678eEa7320Ca7f39d6606Caa3AcBD9D"; // GameTest
 
 export default function Games() {
 
