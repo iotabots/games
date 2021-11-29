@@ -22,7 +22,7 @@ import { useState, useEffect } from 'react';
 
 import spacebots_img from "../assets/images/Game.png";
 
-const spacebotsContractAddress = "0x8b76D80C30715D1c772B760D69c76C8f2EAF50eA";
+const spacebotsContractAddress = "0x2c324f0c0f9B7F20b2c278551fb84c77E26DFdD0";
 
 export default function Spacebots() {
 
