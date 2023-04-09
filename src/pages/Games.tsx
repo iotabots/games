@@ -167,33 +167,6 @@ export default function Games() {
         console.log("gamePlayed");
         console.log(winner, _player_bet.toNumber(), _bot_bet.toNumber());
 
-        let bot_symbol;
-        switch (_bot_bet.toNumber()) {
-          case 0:
-            bot_symbol = "✊";
-            break;
-          case 1:
-            bot_symbol = "✋";
-            break;
-
-          case 2:
-            bot_symbol = "✌️";
-            break;
-        }
-        let player_symbol;
-        switch (_player_bet.toNumber()) {
-          case 0:
-            player_symbol = "✊";
-            break;
-          case 1:
-            player_symbol = "✋";
-            break;
-
-          case 2:
-            player_symbol = "✌️";
-            break;
-        }
-
         if (winner && winner.length > 0) {
           if (winner === account) {
             console.log("😀 won");
