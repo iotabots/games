@@ -130,19 +130,17 @@ export default function Games() {
 
     let token = new ethers.Contract(tokenContractAddress, TOKEN.abi, provider);
     let playerTokenBanlance = await token.balanceOf(account);
-    playerTokenBanlance = ethers.utils.formatEther( playerTokenBanlance )
-    console.log("playerTokenBanlance", playerTokenBanlance)
+    playerTokenBanlance = ethers.utils.formatEther(playerTokenBanlance);
+    console.log("playerTokenBanlance", playerTokenBanlance);
     let totalSupply = await token.totalSupply();
-    totalSupply = ethers.utils.formatEther( totalSupply )
-    setTokenSupply(totalSupply)
-    console.log("totalSupply", totalSupply)
+    totalSupply = ethers.utils.formatEther(totalSupply);
+    setTokenSupply(totalSupply);
+    console.log("totalSupply", totalSupply);
     setPlayerTokens(playerTokenBanlance);
 
-
     let botsTokenBanlance = await token.balanceOf(iotabotsContractAddress);
-    botsTokenBanlance = ethers.utils.formatEther( botsTokenBanlance )
-    console.log("botsTokenBanlance", botsTokenBanlance)
-
+    botsTokenBanlance = ethers.utils.formatEther(botsTokenBanlance);
+    console.log("botsTokenBanlance", botsTokenBanlance);
   }
 
   async function start_game(bet: any) {
@@ -171,7 +169,7 @@ export default function Games() {
           if (winner === account) {
             console.log("😀 won");
             setWinner({
-              message: `😀 You won! 🎉`,
+              message: `😀 You won 10 EGGS! 🎉`,
             });
           } else if (winner === gameContractAddress) {
             console.log("🤖 won");
@@ -244,14 +242,19 @@ export default function Games() {
         <br />
 
         <Card
-        sx={{ width: '100%', display: 'flex', flexDirection: 'column', marginBottom: '30px' }}
+          sx={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            marginBottom: "30px",
+          }}
         >
           <CardContent sx={{ flexGrow: 1 }}>
             <Typography gutterBottom variant="h6" component="h6">
-              Total Supply: { tokenSupply } EGGS
+              Total Supply: {tokenSupply} EGGS
             </Typography>
             <Typography gutterBottom variant="h6" component="h6">
-              Player Balance: { playerTokens } EGGS
+              Player Balance: {playerTokens} EGGS
             </Typography>
           </CardContent>
         </Card>
@@ -340,6 +343,61 @@ export default function Games() {
               <Button onClick={handleClose}>Okay!</Button>
             </Box>
           </Modal>
+          <Card
+            sx={{
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              marginBottom: "30px",
+              marginTop: "50px",
+            }}
+          >
+            <CardContent sx={{ flexGrow: 1 }}>
+              <Typography gutterBottom variant="h6" component="h6">
+                Rules
+              </Typography>
+              <Typography gutterBottom variant="body1">
+                <ol>
+                  <li>
+                    Each player must connect their wallet to the IOTABOTVERSE
+                    platform and hold an IOTABOT (ERC721 Token) to participate
+                    in the game.
+                  </li>
+                  <li>Players can only play against their own IOTABOT.</li>
+                  <li>
+                    Each game round consists of one move: Rock, Paper, or
+                    Scissors.
+                  </li>
+                  <li>
+                    To initiate a game, the player must submit a move by signing
+                    a transaction on the ShimmerEVM network.
+                  </li>
+                  <li>
+                    The IOTABOT will automatically submit its move, which can be
+                    determined randomly or based on predefined logic.
+                  </li>
+                  <li>
+                    Once both moves have been submitted, the smart contract will
+                    determine the winner using the standard Rock Paper Scissors
+                    rules:
+                    <ul>
+                      <li>Rock beats Scissors</li>
+                      <li>Scissors beats Paper</li>
+                      <li>Paper beats Rock</li>
+                    </ul>
+                  </li>
+                  <li>If the player wins, they are awarded 10 EGGS tokens.</li>
+                  <li>
+                    In case of a tie or a loss, the game is declared a draw or a
+                    loss respectively, and no rewards will be distributed.
+                  </li>
+                  <li>
+                    Have fun!
+                  </li>
+                </ol>
+              </Typography>
+            </CardContent>
+          </Card>
         </Container>
       </>
     );
