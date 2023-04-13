@@ -22,7 +22,7 @@ const TotalBurnedTokens = ({ _provider, tokenAddress }: any) => {
     };
 
     fetchTotalBurnedTokens();
-  }, [_provider, tokenAddress]);
+  }, [library, tokenAddress]);
 
   return (
     <div>

@@ -71,7 +71,7 @@ const SoonabotRacing = ({ _contract }: any) => {
     };
 
     fetchRaces();
-  }, [_contract, loading]);
+  }, [library, loading]);
 
   const handleSoonabotIdChange = (e: any) => {
     setSoonabotId(e.target.value);

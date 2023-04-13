@@ -48,7 +48,6 @@ export default function Games() {
 
   const [winner, setWinner] = useState({ message: "" });
   const [loading, setLoading] = useState(false);
-  const [provider, setProvider] = useState(null);
 
   const [playerTokens, setPlayerTokens] = useState("0.0");
   const [tokenSupply, setTokenSupply] = useState("0.0");

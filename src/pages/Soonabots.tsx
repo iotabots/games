@@ -13,13 +13,11 @@ import SoonabotRacing from "../components/SoonabotRacing";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 
 import { useState, useEffect } from "react";
 
-import spacebots_img from "../assets/images/Game.png";
 import SoonabotRacingABI from "../contracts/SoonabotRace.json";
 
 const SoonaRaceContractAddr = "0x342d2Fa65Ea46Eb9028053095904d08860A82fF3";
