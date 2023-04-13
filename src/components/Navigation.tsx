@@ -114,6 +114,28 @@ export default function PrimarySearchAppBar() {
                             color: isActive ? "#02c692" : ""
                         };
                     }}
+                    to="/soonabots">
+                    Soonabots
+                </NavLink>
+            </MenuItem>
+            <MenuItem>
+                <NavLink
+                    style={({ isActive }) => {
+                        return {
+                            color: isActive ? "#02c692" : ""
+                        };
+                    }}
+                    to="/info">
+                    Info
+                </NavLink>
+            </MenuItem>
+            <MenuItem>
+                <NavLink
+                    style={({ isActive }) => {
+                        return {
+                            color: isActive ? "#02c692" : ""
+                        };
+                    }}
                     to="/profile">
                     Profile
                 </NavLink>
@@ -189,6 +211,34 @@ export default function PrimarySearchAppBar() {
                             }}
                             className="nav-link" to="/spacebots">
                             Spacebots
+                        </NavLink>
+                    </Box>
+                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                        |
+                    </Box>
+                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                        <NavLink
+                            style={({ isActive }) => {
+                                return {
+                                    color: isActive ? "#02c692" : ""
+                                };
+                            }}
+                            className="nav-link" to="/soonabots">
+                            Soonabots
+                        </NavLink>
+                    </Box>
+                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                        |
+                    </Box>
+                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                        <NavLink
+                            style={({ isActive }) => {
+                                return {
+                                    color: isActive ? "#02c692" : ""
+                                };
+                            }}
+                            className="nav-link" to="/info">
+                            Info
                         </NavLink>
                     </Box>
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>

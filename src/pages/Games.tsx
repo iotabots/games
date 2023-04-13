@@ -12,6 +12,10 @@ import GAME from "../contracts/Game.json";
 import TOKEN from "../contracts/Token.json";
 
 import { injected } from "../components/wallet/connectors";
+import BurnTokens from "../components/BurnTokens";
+import EGGSBurnLeaderboard from "../components/EGGSBurnLeaderboard";
+import TotalBurnedTokens from '../components/TotalBurnedTokens';
+
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -32,6 +36,8 @@ const gameContractAddress = "0x3CE8aB86dED969004102caB650060373e04A0448"; // Gam
 
 const tokenContractAddress = "0xdFCF738225F6508F7A664c3c7D236432501e16d4"; // Test Token
 
+const burnTokenContractAddress = "0x08c399d67d6A536b21d8D4CAd2F703fFd3e0aF58"; // Test Token
+
 export default function Games() {
   const { active, account, library, activate, deactivate, chainId } =
     useWeb3React();
@@ -42,6 +48,7 @@ export default function Games() {
 
   const [winner, setWinner] = useState({ message: "" });
   const [loading, setLoading] = useState(false);
+  const [provider, setProvider] = useState(null);
 
   const [playerTokens, setPlayerTokens] = useState("0.0");
   const [tokenSupply, setTokenSupply] = useState("0.0");
@@ -391,14 +398,82 @@ export default function Games() {
                     In case of a tie or a loss, the game is declared a draw or a
                     loss respectively, and no rewards will be distributed.
                   </li>
-                  <li>
-                    Have fun!
-                  </li>
+                  <li>Have fun!</li>
                 </ol>
               </Typography>
             </CardContent>
           </Card>
         </Container>
+        <Card
+          sx={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            marginBottom: "30px",
+            marginTop: "50px",
+          }}
+        >
+          <CardContent sx={{ flexGrow: 1 }}>
+            <BurnTokens
+              provider={library.currentProvider}
+              contractAddress={burnTokenContractAddress}
+              tokenContractAddress={tokenContractAddress}
+            />
+                <TotalBurnedTokens provider={library.currentProvider} tokenAddress={tokenContractAddress} />
+
+            <EGGSBurnLeaderboard
+              provider={library.currentProvider}
+              contractAddress={burnTokenContractAddress}
+              top={10}
+            />
+          <hr></hr>
+          <br />
+          <br />
+          <br />
+          <br />
+            <Typography gutterBottom variant="h4" component="h4">
+              How it works
+            </Typography>
+            <Typography gutterBottom variant="h5" component="h5">
+              EGGS Token Burning Process
+            </Typography>
+            <p>
+              Burning EGGS tokens permanently removes a specified amount of
+              tokens from circulation, reducing the total supply. This action is
+              irreversible.
+            </p>
+            <Typography gutterBottom variant="h6" component="h6">
+              Step 1: Approve the contract
+            </Typography>
+            <p>
+              Before burning tokens, you need to approve the smart contract to
+              transfer the specified amount of EGGS tokens on your behalf. This
+              is a security measure implemented in the ERC20 standard to ensure
+              that you maintain control over your tokens.
+            </p>
+            <p>
+              By approving the contract, you grant permission for the smart
+              contract to transfer a specific amount of tokens from your
+              account. This allowance can be changed at any time by approving a
+              new amount.
+            </p>
+            <Typography gutterBottom variant="h6" component="h6">
+              Step 2: Burn tokens
+            </Typography>
+            <p>
+              After approving the contract, you can proceed to burn the tokens.
+              Clicking the "Burn Tokens" button will send a transaction to the
+              smart contract, which will transfer the specified amount of tokens
+              to a designated "dead" address. This action effectively removes
+              the tokens from circulation.
+            </p>
+            <p>
+              Please note that burning tokens is an irreversible action. Once
+              burned, the tokens cannot be recovered.
+            </p>
+            <p>Have fun!</p>
+          </CardContent>
+        </Card>
       </>
     );
   } else {

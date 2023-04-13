@@ -3,11 +3,14 @@ import { Routes, Route } from "react-router-dom";
 
 import Navigation from './components/Navigation'
 import Footer from './components/Footer'
+import TestnetWarningBanner from './components/TestnetWarningBanner'
 
 import Home from './pages/Home'
 import Games from './pages/Games'
 import Spacebots from './pages/Spacebots'
+import Soonabots from './pages/Soonabots'
 import Profile from './pages/Profile'
+import Info from './pages/Info'
 
 import './App.css';
 
@@ -45,11 +48,14 @@ export default function App() {
     <Web3ReactProvider getLibrary={getLibrary}>
       <ThemeProvider theme={theme}>
         <Navigation />
+        <TestnetWarningBanner />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="games" element={<Games />} />
           <Route path="spacebots" element={<Spacebots />} />
+          <Route path="soonabots" element={<Soonabots />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="info" element={<Info />} />
         </Routes>
         <Footer />
       </ThemeProvider>
