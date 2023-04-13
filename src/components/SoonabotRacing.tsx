@@ -155,7 +155,12 @@ const SoonabotRacing = ({ _contract }: any) => {
           <ListItem key={index}>
             <ListItemText primary={`Race ${index + 1} `} />
             <ListItemText primary={`${race[1].length} player(s)`} />
-            <ListItemText primary={`Bots: ${race[0]} `} />
+            <ListItemText primary={`Bots: `} />
+            {race[0].map((bot: any) => (
+              <ListItemText
+                primary={`${race[2].toNumber() === bot.toNumber() ? "🏆" : ""}${bot} `}
+              />
+            ))}
           </ListItem>
         ))}
       </List>
