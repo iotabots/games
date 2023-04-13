@@ -16,12 +16,12 @@ import { useWeb3React } from "@web3-react/core";
 // ABIs
 import SoonabotRacingABI from "../contracts/SoonabotRace.json";
 import ERC20ABI from "../contracts/Token.json";
-import ERC721ABI from "../contracts/iotabots_abi.json";
+// import ERC721ABI from "../contracts/iotabots_abi.json";
 
 // Contract addresses
 const SoonaRaceContractAddr = "0x342d2Fa65Ea46Eb9028053095904d08860A82fF3";
 const eggsTokenAddress = "0xdFCF738225F6508F7A664c3c7D236432501e16d4"; // Test Token
-const TestSonabotsContractAddr = "0x2f5C574ddF275b4cDfAE26fE8e75621c4B7E106e";
+// const TestSonabotsContractAddr = "0x2f5C574ddF275b4cDfAE26fE8e75621c4B7E106e";
 
 const SoonabotRacing = ({ _contract }: any) => {
   const { library } = useWeb3React();
@@ -96,16 +96,14 @@ const SoonabotRacing = ({ _contract }: any) => {
         signer
       );
 
-      const soonabotNFTContract = new ethers.Contract(
-        TestSonabotsContractAddr,
-        ERC721ABI,
-        signer
-      );
+      // const soonabotNFTContract = new ethers.Contract(
+      //   TestSonabotsContractAddr,
+      //   ERC721ABI,
+      //   signer
+      // );
 
       const entryFee = ethers.utils.parseUnits("1", 18); // Assuming 18 decimals in EGGS token
       await eggsTokenContract.approve(SoonaRaceContractAddr, entryFee);
-
-      await soonabotNFTContract.approve(SoonaRaceContractAddr, soonabotId);
 
       const latestRaceId = races.length - 1;
       const latestRace = latestRaceId >= 0 ? races[latestRaceId] : null;
@@ -124,9 +122,8 @@ const SoonabotRacing = ({ _contract }: any) => {
       console.error("Error:", error);
       showMessage("Error: Unable to join or create a race.");
     }
-    setSoonabotId(0)
+    setSoonabotId(0);
     setLoading(false);
-
   };
 
   return (
