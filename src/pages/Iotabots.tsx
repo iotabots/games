@@ -14,7 +14,7 @@ import TOKEN from "../contracts/Token.json";
 import { injected } from "../components/wallet/connectors";
 import BurnTokens from "../components/BurnTokens";
 import EGGSBurnLeaderboard from "../components/EGGSBurnLeaderboard";
-import TotalBurnedTokens from '../components/TotalBurnedTokens';
+import TotalBurnedTokens from "../components/TotalBurnedTokens";
 
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
@@ -28,6 +28,7 @@ import Modal from "@mui/material/Modal";
 import axios from "axios";
 
 import { useState, useEffect } from "react";
+import Connect from "../components/wallet/Connect";
 
 // const iotabotsContractAddress = "0x6c2D60145cDD0396bd03298693495bf98fcdD93E"; // LIVE
 const iotabotsContractAddress = "0xb5A53615170e4684E488C9E1c641aB9dDC307489"; // Test
@@ -38,7 +39,7 @@ const tokenContractAddress = "0xdFCF738225F6508F7A664c3c7D236432501e16d4"; // Te
 
 const burnTokenContractAddress = "0x08c399d67d6A536b21d8D4CAd2F703fFd3e0aF58"; // Test Token
 
-export default function Games() {
+export default function Iotabots() {
   const { active, account, library, activate, deactivate, chainId } =
     useWeb3React();
 
@@ -71,24 +72,6 @@ export default function Games() {
   }
 
   const [bots, setBots] = useState<Array<any>>([]);
-
-  const callback = function (err: any) {
-    console.log("callback1", err);
-  };
-
-  async function connect() {
-    try {
-      let x = await activate(injected, callback);
-      console.log("activated", x);
-      console.log("activated", active);
-      console.log("activated", account);
-      // useEffect(() => {
-      //     loadBots()
-      // }, [])
-    } catch (ex) {
-      console.log(ex);
-    }
-  }
 
   async function loadBots() {
     // await connect();
@@ -198,23 +181,13 @@ export default function Games() {
     }
   }
 
-  async function disconnect() {
-    try {
-      deactivate();
-      console.log("deactivated");
-    } catch (ex) {
-      console.log(ex);
-    }
-  }
-
   const style = {
     position: "absolute" as "absolute",
     top: "50%",
     left: "50%",
+    backgroundColor: "background.paper",
     transform: "translate(-50%, -50%)",
     width: 400,
-    bgcolor: "background.paper",
-    border: "2px solid #000",
     boxShadow: 24,
     p: 4,
   };
@@ -224,26 +197,7 @@ export default function Games() {
     content = (
       <>
         <br />
-        <Container maxWidth="sm">
-          <Box
-            sx={{ bgcolor: "#cfe8fc", padding: "10px", textAlign: "center" }}
-          >
-            {active ? (
-              <span>
-                Connected with{" "}
-                <b>{`${account!.substring(0, 6)}...${account!.substring(
-                  account!.length - 4
-                )}`}</b>
-              </span>
-            ) : (
-              <span>Not connected</span>
-            )}
-            <p>ChainId: {chainId}</p>
-            <Button variant="outlined" onClick={disconnect}>
-              Disconnect
-            </Button>
-          </Box>
-        </Container>
+
         <hr />
         <br />
 
@@ -255,12 +209,18 @@ export default function Games() {
             marginBottom: "30px",
           }}
         >
-          <CardContent sx={{ flexGrow: 1 }}>
-            <Typography gutterBottom variant="h6" component="h6">
-              Total Supply: {tokenSupply} EGGS
+          <CardContent sx={{ textAlign: "center", flexGrow: 1 }}>
+            <Typography gutterBottom variant="h5" component="h5">
+              {tokenSupply} EGGS
             </Typography>
-            <Typography gutterBottom variant="h6" component="h6">
-              Player Balance: {playerTokens} EGGS
+            <Typography mt={-2} gutterBottom variant="body1" component="div">
+              Total Supply
+            </Typography>
+            <Typography gutterBottom variant="h5" component="h5">
+              {playerTokens} EGGS
+            </Typography>
+            <Typography mt={-2} gutterBottom variant="body1" component="div">
+              Player Balance
             </Typography>
           </CardContent>
         </Card>
@@ -281,7 +241,7 @@ export default function Games() {
                 // sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}
                 >
                   <CardMedia
-                    height="100%"
+                    height="240px"
                     component="img"
                     image={bot.image}
                     alt="IOTABOT"
@@ -413,23 +373,31 @@ export default function Games() {
           }}
         >
           <CardContent sx={{ flexGrow: 1 }}>
-            <BurnTokens
-              provider={library.currentProvider}
-              contractAddress={burnTokenContractAddress}
-              tokenContractAddress={tokenContractAddress}
-            />
-                <TotalBurnedTokens provider={library.currentProvider} tokenAddress={tokenContractAddress} />
-
-            <EGGSBurnLeaderboard
-              provider={library.currentProvider}
-              contractAddress={burnTokenContractAddress}
-              top={10}
-            />
-          <hr></hr>
-          <br />
-          <br />
-          <br />
-          <br />
+            <Box sx={{ textAlign: "center" }}>
+              <TotalBurnedTokens
+                provider={library.currentProvider}
+                tokenAddress={tokenContractAddress}
+              />
+            </Box>
+            <Box sx={{ textAlign: "center" }}>
+              <BurnTokens
+                provider={library.currentProvider}
+                contractAddress={burnTokenContractAddress}
+                tokenContractAddress={tokenContractAddress}
+              />
+            </Box>
+            <Box sx={{ textAlign: "center" }}>
+              <EGGSBurnLeaderboard
+                provider={library.currentProvider}
+                contractAddress={burnTokenContractAddress}
+                top={10}
+              />
+            </Box>
+            <hr></hr>
+            <br />
+            <br />
+            <br />
+            <br />
             <Typography gutterBottom variant="h4" component="h4">
               How it works
             </Typography>
@@ -475,16 +443,6 @@ export default function Games() {
         </Card>
       </>
     );
-  } else {
-    content = (
-      <Container maxWidth="sm">
-        <Box sx={{ bgcolor: "#cfe8fc", padding: "10px", textAlign: "center" }}>
-          <Button variant="outlined" onClick={connect}>
-            Connect to MetaMask
-          </Button>
-        </Box>
-      </Container>
-    );
   }
 
   return (
@@ -493,6 +451,7 @@ export default function Games() {
       <main>
         {/* Hero unit */}
         <Container sx={{ py: 8 }} maxWidth="md">
+          {/* <Connect /> */}
           <Typography
             component="h1"
             variant="h2"

@@ -92,7 +92,7 @@ export default function PrimarySearchAppBar() {
                             color: isActive ? "#02c692" : ""
                         };
                     }}
-                    to="/games">
+                    to="/iotabots">
                     IOTABOTS
                 </NavLink>
             </MenuItem>
@@ -116,6 +116,17 @@ export default function PrimarySearchAppBar() {
                     }}
                     to="/soonabots">
                     Soonabots
+                </NavLink>
+            </MenuItem>
+            <MenuItem>
+                <NavLink
+                    style={({ isActive }) => {
+                        return {
+                            color: isActive ? "#02c692" : ""
+                        };
+                    }}
+                    to="/stake">
+                    Stake
                 </NavLink>
             </MenuItem>
             <MenuItem>
@@ -181,21 +192,7 @@ export default function PrimarySearchAppBar() {
                                     color: isActive ? "#02c692" : ""
                                 };
                             }}
-                            className="nav-link" to="/">
-                            Home
-                        </NavLink>
-                    </Box>
-                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                        |
-                    </Box>
-                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                        <NavLink
-                            style={({ isActive }) => {
-                                return {
-                                    color: isActive ? "#02c692" : ""
-                                };
-                            }}
-                            className="nav-link" to="/games">
+                            className="nav-link" to="/iotabots">
                             IOTABOTS
                         </NavLink>
                     </Box>
@@ -225,6 +222,20 @@ export default function PrimarySearchAppBar() {
                             }}
                             className="nav-link" to="/soonabots">
                             Soonabots
+                        </NavLink>
+                    </Box>
+                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                        |
+                    </Box>
+                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                        <NavLink
+                            style={({ isActive }) => {
+                                return {
+                                    color: isActive ? "#02c692" : ""
+                                };
+                            }}
+                            className="nav-link" to="/stake">
+                            Stake
                         </NavLink>
                     </Box>
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>

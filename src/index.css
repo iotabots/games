@@ -1,4 +1,4 @@
-
+/* 
 
 @font-face {
   font-family: "coder";
@@ -19,5 +19,28 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+ */
+
+ /* Add this CSS in your global CSS or a CSS file imported in your project */
+@keyframes matrixRain {
+  0% {
+    opacity: 0.7;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+
+.matrixRain {
+  font-family: "Courier New", monospace;
+  font-size: 16px;
+  color: #00ff33;
+  position: fixed;
+  opacity: 0.2;
+  z-index: -1000;
+  animation: matrixRain 1s linear infinite;
 }
 

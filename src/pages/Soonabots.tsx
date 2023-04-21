@@ -9,7 +9,7 @@ import { ethers } from "ethers";
 import TEST_SOONABOTS_ABI from "../contracts/iotabots_abi.json";
 
 import { injected } from "../components/wallet/connectors";
-import SoonabotRacing from "../components/SoonabotRacing";
+import { SoonabotRacing } from "../components/SoonabotRacing";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -20,7 +20,9 @@ import { useState, useEffect } from "react";
 
 import SoonabotRacingABI from "../contracts/SoonabotRace.json";
 
-const SoonaRaceContractAddr = "0x342d2Fa65Ea46Eb9028053095904d08860A82fF3";
+import addresses from "../contracts/addresses.json";
+
+
 const TestSonabotsContractAddress =
   "0x2f5C574ddF275b4cDfAE26fE8e75621c4B7E106e";
 
@@ -31,39 +33,21 @@ export default function Soonabots() {
   useEffect(() => {
     if (active) {
       loadBots();
+      const provider = new ethers.providers.Web3Provider(
+        library.currentProvider
+      );
+      const contract = new ethers.Contract(
+        addresses.soonabotRaceAddr,
+        SoonabotRacingABI.abi,
+        provider
+      );
+      setGameContract(contract);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active]);
 
   const [bots, setBots] = useState<Array<any>>([]);
   const [gameContract, setGameContract] = useState<any>(null);
-
-  const callback = function (err: any) {
-    console.log("callback1", err);
-  };
-
-  async function connect() {
-    try {
-      let x = await activate(injected, callback);
-      console.log("activated", x);
-      console.log("activated", active);
-      console.log("activated", account);
-      // useEffect(() => {
-      //     loadBots()
-      // }, [])
-      const provider = new ethers.providers.Web3Provider(
-        library.currentProvider
-      );
-      const contract = new ethers.Contract(
-        SoonaRaceContractAddr,
-        SoonabotRacingABI,
-        provider
-      );
-      setGameContract(contract);
-    } catch (ex) {
-      console.log(ex);
-    }
-  }
 
   async function loadBots() {
     // await connect();
@@ -100,48 +84,14 @@ export default function Soonabots() {
 
     console.log("items:", items);
     setBots(items);
-    console.log("bots:", bots);
     // const tokenContract = new ethers.Contract(iotabotsContractAddress, IOTABOTS_ABI, provider)
     // console.log("tokenContract:", tokenContract)
-  }
-
-  async function disconnect() {
-    try {
-      deactivate();
-      console.log("deactivated");
-    } catch (ex) {
-      console.log(ex);
-    }
   }
 
   var content;
   if (active) {
     content = (
       <>
-        <br />
-        <Container maxWidth="sm">
-          <Box
-            sx={{ bgcolor: "#cfe8fc", padding: "10px", textAlign: "center" }}
-          >
-            {active ? (
-              <span>
-                Connected with{" "}
-                <b>{`${account!.substring(0, 6)}...${account!.substring(
-                  account!.length - 4
-                )}`}</b>
-              </span>
-            ) : (
-              <span>Not connected</span>
-            )}
-            <p>ChainId: {chainId}</p>
-            <Button variant="outlined" onClick={disconnect}>
-              Disconnect
-            </Button>
-          </Box>
-        </Container>
-        <hr />
-        <br />
-
         <Typography
           component="h3"
           variant="h3"
@@ -153,28 +103,30 @@ export default function Soonabots() {
         </Typography>
         <Container maxWidth="sm">
           <Box sx={{ textAlign: "center" }}>
-            {bots.map((bot, index) => (
-              <Grid item key={index} xs={12} sm={12} md={12}>
-                <Card
-                // sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}
-                >
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h6" component="h6">
-                      {`Soonabots ${bot.tokenId}`}
-                    </Typography>
-                    <Typography
-                      component="h4"
-                      variant="h4"
-                      align="center"
-                      color="#fff"
-                      gutterBottom
-                    >
-                      🤖
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
+            <Grid container spacing={2}>
+              {bots.map((bot, index) => (
+                <Grid item key={index} xs={12} sm={3} md={3}>
+                  <Card
+                  //  sx={{ width: '100%', display: 'flex', flexDirection: 'column' }}
+                  >
+                    <CardContent sx={{ flexGrow: 1 }}>
+                      <Typography gutterBottom variant="h6" component="h6">
+                        {`Soonabots ${bot.tokenId}`}
+                      </Typography>
+                      <Typography
+                        component="h4"
+                        variant="h4"
+                        align="center"
+                        color="#fff"
+                        gutterBottom
+                      >
+                        🤖
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
           </Box>
         </Container>
         <hr />
@@ -188,22 +140,10 @@ export default function Soonabots() {
             <Typography gutterBottom variant="h6" component="h6">
               {`New web3 Game:`}
             </Typography>
-            <SoonabotRacing
-              contract={gameContract}
-            />
+            <SoonabotRacing contract={gameContract} bots={bots} />
           </CardContent>
         </Card>
       </>
-    );
-  } else {
-    content = (
-      <Container maxWidth="sm">
-        <Box sx={{ bgcolor: "#cfe8fc", padding: "10px", textAlign: "center" }}>
-          <Button variant="outlined" onClick={connect}>
-            Connect to MetaMask
-          </Button>
-        </Box>
-      </Container>
     );
   }
 
@@ -213,6 +153,7 @@ export default function Soonabots() {
       <main>
         {/* Hero unit */}
         <Container sx={{ py: 8 }} maxWidth="md">
+          {/* <Connect /> */}
           <Typography
             component="h1"
             variant="h2"
