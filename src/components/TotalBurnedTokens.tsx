@@ -5,10 +5,13 @@ import { useWeb3React } from "@web3-react/core";
 
 import TOKEN from "../contracts/Token.json";
 import KPI from "./KPI";
+import { ADDRESSES } from "../contracts/addresses";
 
-const TotalBurnedTokens = ({ tokenAddress }: any) => {
+const TotalBurnedTokens = () => {
   const [totalBurnedTokens, setTotalBurnedTokens] = useState("");
   const deadAddress = "0x000000000000000000000000000000000000dEaD";
+
+  const tokenAddress = ADDRESSES.eggsAddr;
   const { library } = useWeb3React();
   useEffect(() => {
     const fetchTotalBurnedTokens = async () => {

@@ -1,8 +1,8 @@
 import { Card, CardContent, CardMedia, Grid, Typography } from "@mui/material";
 import { useWeb3React } from "@web3-react/core";
 import { useEffect, useState } from "react";
-import IERC721Enumerable from "../contracts/IERC721Enumerable.json";
-import IERC721Metadata from "../contracts/IERC721Metadata.json";
+import IERC721Enumerable from "../../../contracts/IERC721Enumerable.json";
+import IERC721Metadata from "../../../contracts/IERC721Metadata.json";
 import { ethers } from "ethers";
 import axios from "axios";
 
@@ -20,7 +20,7 @@ export const StakeIOTAHeros = () => {
 
   async function loadApes(addr: any) {
     //tokenOfOwnerByIndex
-    const provider = new ethers.providers.Web3Provider(library.currentProvider);
+    const provider = new ethers.providers.Web3Provider(library.provider);
     let contract_Enumerable = new ethers.Contract(
       addr,
       IERC721Enumerable.abi,
@@ -67,8 +67,7 @@ export const StakeIOTAHeros = () => {
         let obj = {
           tokenId: token_index,
           url: "https://api.iotaheroes.com/hero/image/" + token_index + ".png",
-
-        }
+        };
         array.push(obj);
       }
     }

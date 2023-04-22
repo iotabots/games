@@ -4,9 +4,16 @@ import abi from "../contracts/EGGSBurnLeaderboard.json"; // Import the contract 
 import { Box } from "@mui/material";
 import { useWeb3React } from "@web3-react/core";
 import Rank from "./Rank";
+import { ADDRESSES } from "../contracts/addresses";
 
-const Leaderboard = ({ contractAddress, top = 10 }: any) => {
+interface Props {
+  top: number;
+}
+
+const Leaderboard: React.FC<Props> = (props) => {
+  const { top } = props;
   const [leaderboard, setLeaderboard] = useState([]);
+  const contractAddress = ADDRESSES.eggsBurnAddr;
 
   const { library } = useWeb3React();
 
@@ -63,6 +70,7 @@ const Leaderboard = ({ contractAddress, top = 10 }: any) => {
     >
       {leaderboard.map((burner: any, index) => (
         <Rank
+          key={index}
           rank={index + 1}
           address={shortenAddress(burner.address)}
           highlight={{ label: "Eggs", value: burner?.burnedAmount }}

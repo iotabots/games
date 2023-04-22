@@ -1,5 +1,5 @@
-import { Box, Button, Skeleton, Typography } from "@mui/material";
 import React from "react";
+import { Box, Button, Skeleton, Typography } from "@mui/material";
 
 const BotLoading = () => {
   return (

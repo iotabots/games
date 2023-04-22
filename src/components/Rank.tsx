@@ -5,7 +5,7 @@ interface Props {
   rank: number;
   address?: string;
   highlight: {
-    value: number;
+    value: number | string;
     label: string;
   };
 }

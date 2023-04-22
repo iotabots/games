@@ -2,8 +2,12 @@ import Head from "next/head";
 import React from "react";
 import Base from "../layouts/Base";
 import { Container, Typography } from "@mui/material";
+import { PoolShares } from "../components/PoolShares";
+import { useWeb3React } from "@web3-react/core";
 
 export default function Profile() {
+  const { library, account } = useWeb3React();
+
   return (
     <>
       <Head>
@@ -15,6 +19,7 @@ export default function Profile() {
       <Base>
         <Container maxWidth="md">
           <Typography variant="h1">Profile</Typography>
+          {account && <PoolShares />}
         </Container>
       </Base>
     </>

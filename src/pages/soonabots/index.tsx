@@ -1,12 +1,15 @@
 import Head from "next/head";
 import React from "react";
 import Base from "../../layouts/Base";
-import { Container, Typography } from "@mui/material";
+import { Container } from "@mui/material";
 import Hero from "../../components/Hero";
 import { GAMES } from "../../mocks/games";
 import { SoonabotRacing } from "./components/SoonabotRacing";
+import { useWeb3React } from "@web3-react/core";
 
 export default function Soonabots() {
+  const { account } = useWeb3React();
+
   return (
     <>
       <Head>
@@ -16,10 +19,7 @@ export default function Soonabots() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Base hero={<Hero image={GAMES[1].image} />}>
-        <Container maxWidth="md">
-          <Typography variant="h1">Soonabots</Typography>
-          <SoonabotRacing />
-        </Container>
+        <Container maxWidth="md">{account && <SoonabotRacing />}</Container>
       </Base>
     </>
   );

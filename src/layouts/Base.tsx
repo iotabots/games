@@ -28,7 +28,7 @@ const Base: React.FC<Props> = ({ children, hero }) => {
 };
 
 const styles = {
-  pb: "80px",
+  pb: "120px",
   pt: "140px",
 
   "&.hero": {

@@ -12,17 +12,12 @@ export default function useSoonabots(address: string, tokenAddress: string) {
     queryKey: ["Soonabots"],
     queryFn: () => {
       if (!contract) {
-        return;
+        return [];
       }
 
       return contract
         .walletOfOwner(address)
-        .then((res) => res.map((x) => x.toNumber()))
-        .catch((error: any) => {
-          return {
-            error,
-          };
-        });
+        .then((res) => res.map((x) => x.toNumber()));
     },
   });
 

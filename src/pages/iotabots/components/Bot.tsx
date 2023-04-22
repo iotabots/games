@@ -54,31 +54,47 @@ const Bot: React.FC<Props> = (props) => {
         signer
       );
 
-      await contract.createSingleGame(id, bet, {
+      let tx = await contract.createSingleGame(id, bet, {
         value: ethers.utils.parseEther("1"),
       });
 
-      contract.once("gamePlayed", (winner: string, _player_bet, _bot_bet) => {
-        if (winner && winner.length > 0) {
-          if (winner === account) {
-            setWinner({
-              message: `😀 You won 10 EGGS! 🎉`,
-            });
-          } else if (winner === ADDRESSES.iotabotsGameAddr) {
-            setWinner({
-              message: `Sorry - your 🤖 won!`,
-            });
-          } else {
-            setWinner({
-              message: `Draw! There is no winner!`,
-            });
+      let recipe = await tx.wait();
+
+      console.log("recipe", recipe);
+
+      for (let index = 0; index < recipe.events.length; index++) {
+        const event = recipe.events[index];
+        if (event.event === "gamePlayed") {
+          console.log("event found:", event);
+
+          const { winner, _bot_bet, _player_bet } = event.args;
+          console.log("winner: ", winner);
+          console.log("_bot_bet: ", _bot_bet);
+          console.log("_player_bet: ", _player_bet);
+
+          if (winner && winner.length > 0) {
+            if (winner === account) {
+              setWinner({
+                message: `😀 You won 10 EGGS! 🎉`,
+              });
+            } else if (winner === ADDRESSES.iotabotsGameAddr) {
+              setWinner({
+                message: `Sorry - your 🤖 won!`,
+              });
+            } else {
+              setWinner({
+                message: `Draw! There is no winner!`,
+              });
+            }
           }
         }
-        setLoading(false);
-        handleOpen();
-        refetchGame();
-      });
+      }
+
+      setLoading(false);
+      handleOpen();
+      refetchGame();
     } catch (error) {
+      setLoading(false);
       console.error(error);
     }
   }
@@ -99,7 +115,7 @@ const Bot: React.FC<Props> = (props) => {
                 disabled={loading}
                 className="playBtn"
                 variant="outlined"
-                onClick={() => startGame(0)}
+                onClick={() => startGame(button.id - 1)}
               >
                 {button.label}
               </Button>

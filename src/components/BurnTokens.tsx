@@ -5,11 +5,15 @@ import TOKEN from "../contracts/Token.json";
 
 import { useWeb3React } from "@web3-react/core";
 import { Box, Button, TextField, Typography } from "@mui/material";
+import { ADDRESSES } from "../contracts/addresses";
 
-const BurnTokens = ({ contractAddress, tokenContractAddress }: any) => {
+const BurnTokens = () => {
   const { library, active } = useWeb3React();
   const [amount, setAmount] = useState<number>(0);
   const [status, setStatus] = useState("");
+
+  const contractAddress = ADDRESSES.eggsBurnAddr;
+  const tokenContractAddress = ADDRESSES.eggsAddr;
 
   const burnTokens = async () => {
     const provider = new ethers.providers.Web3Provider(library.provider);

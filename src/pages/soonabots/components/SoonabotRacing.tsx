@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
   Button,
-  TextField,
   Typography,
   CircularProgress,
   Box,
@@ -12,6 +11,7 @@ import {
   Select,
   MenuItem,
   InputLabel,
+  Skeleton,
 } from "@mui/material";
 
 import { ethers } from "ethers";
@@ -20,15 +20,15 @@ import { useWeb3React } from "@web3-react/core";
 // ABIs
 import SoonabotRacingABI from "../../../contracts/SoonabotRace.json";
 import ERC20ABI from "../../../contracts/Token.json";
-import SoonabotNFT from "../../../contracts/IERC721Enumerable.json";
 
 import { ADDRESSES } from "../../../contracts/addresses";
 import { Countdown } from "../../../components/Countdown";
 import useSoonabots from "../../../hooks/contracts/useSoonabots";
+import KPI from "../../../components/KPI";
+import Rank from "../../../components/Rank";
 
 // Contract addresses
 const eggsTokenAddress = "0xdFCF738225F6508F7A664c3c7D236432501e16d4"; // Test Token
-const soonabotAddr = "0x2f5C574ddF275b4cDfAE26fE8e75621c4B7E106e"; // Test Token
 
 export const SoonabotRacing = () => {
   const { account, library } = useWeb3React();
@@ -38,11 +38,10 @@ export const SoonabotRacing = () => {
     ADDRESSES.soonabotsAddr
   );
 
-  const treasuryEventStartDate = new Date("2023-05-03T15:00:00"); // Update this to the actual event start date and time
+  console.log("data", data);
 
-  const [soonabotId, setSoonabotId] = useState(0);
+  const treasuryEventStartDate = new Date("2023-05-03T15:00:00"); // Update this to the actual event start date and time
   const [balance, setBalance] = useState(0);
-  const [bots, setBots] = useState<Array<any>>([]);
   const [races, setRaces] = useState<Array<any>>([]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -58,35 +57,7 @@ export const SoonabotRacing = () => {
     }, 3000);
   };
 
-  const checkPlayedBots = async (_bots?: any) => {
-    let array: any = [];
-    if (_bots) {
-      console.log("_bots set", _bots);
-      array = _bots.map((bot: any) => {
-        console.log("bot", bot);
-        return {
-          id: bot,
-          canPlay: true,
-        };
-      });
-    } else {
-      console.log("bots not set", bots);
-      if (bots.length === 0) return
-      bots.forEach((bot: any) => {});
-      for (let index = 0; index < bots.length; index++) {
-        const bot = bots[index];
-        array.push({
-          id: bot.tokenId,
-          canPlay: true,
-        });
-      }
-    }
-    console.log("array", array);
-    setAvailableBots(array);
-  };
-
   useEffect(() => {
-    console.log("bots", bots);
     const fetchRaces = async () => {
       const provider = new ethers.providers.Web3Provider(library.provider);
       const signer = provider.getSigner();
@@ -104,7 +75,9 @@ export const SoonabotRacing = () => {
           race = await contract.getRace(raceId);
           races.push(race);
           raceId++;
+          console.log("race", race);
         } catch (error) {
+          console.log("error", error);
           race = null;
         }
       } while (race);
@@ -113,28 +86,15 @@ export const SoonabotRacing = () => {
       let _balance = await contract.balanceOf(signer.getAddress());
       setBalance(_balance.toNumber());
       setRaces(races);
-      checkPlayedBots();
     };
 
     if (account && data && isFetched) {
       fetchRaces();
-      console.log("soonabot sdata", data);
-      if (data.hasOwnProperty("error")) {
-        console.error("Das läuft net");
-      } else {
-        console.log("Das läuft:", data);
-        setBots(data as number[]);
-        checkPlayedBots(data as number[]);
-        refetch()
-      }
     }
-  }, [account, library, loading]);
+  }, [account, library, loading, data]);
 
-  const handleSoonabotIdChange = (e: any) => {
-    setSoonabotId(e.target.value);
-  };
-
-  const joinOrCreateRace = async () => {
+  const joinOrCreateRace = async (id: number) => {
+    console.log("id", id);
     setLoading(true);
     try {
       const provider = new ethers.providers.Web3Provider(library.provider);
@@ -152,82 +112,123 @@ export const SoonabotRacing = () => {
       );
 
       const entryFee = ethers.utils.parseUnits("1", 18); // Assuming 18 decimals in EGGS token
-      await eggsTokenContract.approve(ADDRESSES.soonabotRaceAddr, entryFee);
+      let txApprove = await eggsTokenContract.approve(
+        ADDRESSES.soonabotRaceAddr,
+        entryFee
+      );
+      await txApprove.wait();
 
-      const txJoin = await contract.play(soonabotId);
+      const txJoin = await contract.play(id);
       await txJoin.wait();
       showMessage("Successfully joined the race! 🚀🎉");
     } catch (error) {
       console.error("Error:", error);
       showMessage("Error: Unable to join or create a race. 😢");
     }
-    setSoonabotId(0);
-    checkPlayedBots();
     setLoading(false);
   };
 
   return (
-    <div>
-      <Typography variant="h4">Soonabot Racing</Typography>
-      <Typography variant="h6">Race Wins: {balance}</Typography>
-      <Box my={2} textAlign="center">
-        <Countdown targetDate={treasuryEventStartDate} />
-        <Typography variant="body1">
-          The leaderboard will reset and the real test race starts:{" "}
-          {treasuryEventStartDate.toLocaleString()}
+    <Box>
+      <Box
+        sx={{
+          display: "flex",
+          gap: 4,
+          flexWrap: "wrap",
+        }}
+      >
+        <Box sx={{ flex: 1 }}>
+          <Typography variant="h3" sx={{ mb: 1 }}>
+            Soonabots
+          </Typography>
+          <Countdown targetDate={treasuryEventStartDate} />
+          <Typography color="text.secondary" sx={{ mb: 3 }}>
+            The leaderboard will reset and the real test race starts.
+          </Typography>
+
+          <Typography>{message}</Typography>
+        </Box>
+        <Box sx={{ flex: 1 }}>
+          {account && <KPI label="Race Wins" value={String(balance)} />}
+        </Box>
+      </Box>
+
+      <Box sx={{ my: 4 }}>
+        <Typography variant="h4" gutterBottom>
+          My Soonabots
         </Typography>
-      </Box>
-      <FormControl fullWidth margin="normal">
-        <InputLabel id="soonabot-select-label">Soonabot ID</InputLabel>
-        {availableBots.length}
-        <Select
-          labelId="soonabot-select-label"
-          value={soonabotId}
-          onChange={handleSoonabotIdChange}
-          fullWidth
+        <Box
+          sx={{
+            display: "flex",
+            gap: 4,
+          }}
         >
-          {data && availableBots.map((bot: any) => (
-            <MenuItem key={bot.id} value={bot.id}>
-              {bot.id}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-
-      <Box my={2} textAlign="center">
-        <Button
-          variant="contained"
-          onClick={joinOrCreateRace}
-          sx={{ display: loading ? "none" : "inline" }}
-        >
-          PLAY!
-        </Button>
-        {loading && <CircularProgress />}
-        <Typography>{message}</Typography>
-      </Box>
-
-      <Typography variant="h6">List of Races:</Typography>
-      <List>
-        {races.map((race, index) => (
-          <ListItem key={index}>
-            <ListItemText
-              sx={{ maxWidth: "100px" }}
-              primary={`Race ${index + 1} `}
-            />
-            <ListItemText primary={`Bots: `} />
-            {race[0].map((bot: any) => (
-              <>
-                {`${race[2].toNumber() === bot.toNumber() ? "🏆" : ""}${bot} `}
-              </>
+          {data &&
+            data.map((bot) => (
+              <Box
+                key={bot}
+                sx={{
+                  bgcolor: "background.paper",
+                  p: 2,
+                  borderRadius: 2,
+                  boxShadow: 1,
+                  flex: 1,
+                  display: "flex",
+                  flexDirection: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Typography sx={{ flex: 1 }}>🤖 {bot}</Typography>
+                <Button
+                  disabled={loading}
+                  variant="contained"
+                  onClick={() => joinOrCreateRace(bot)}
+                  sx={{ height: 36, width: 120 }}
+                >
+                  {loading ? <Skeleton width={50} /> : "Play"}
+                </Button>
+              </Box>
             ))}
-          </ListItem>
-        ))}
-      </List>
-      <Typography variant="body1">
-        To participate, you need to pay an entry fee of 1 EGGS token and have a
-        Soonabot NFT. Enter your Soonabot ID and click the button to join or
-        create a race. Each race can have up to 3 bots.
-      </Typography>
-    </div>
+          {data && data.length === 0 && <Box>Nix hasche in de Dasche</Box>}
+        </Box>
+      </Box>
+
+      <Box sx={{ mt: 6 }}>
+        <Typography variant="h4" gutterBottom>
+          List of Races
+        </Typography>
+        <Typography color="text.secondary">
+          To participate, you need to pay an entry fee of 1 EGGS token and have
+          a Soonabot NFT. Enter your Soonabot ID and click the button to join or
+          create a race. Each race can have up to 3 bots.
+        </Typography>
+        <Box
+          sx={{
+            mt: 2,
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          {races.map((race, index) => {
+            const bots = race[0].map((bot: any) => `#${bot} `);
+            const winner = race[0].map((bot: any) =>
+              race[2].toNumber() === bot.toNumber() ? String(bot) : ""
+            );
+
+            return (
+              <Rank
+                key={index}
+                rank={index + 1}
+                address={`Soonabots: ${bots}`}
+                highlight={{
+                  label: "Winner",
+                  value: winner,
+                }}
+              />
+            );
+          })}
+        </Box>
+      </Box>
+    </Box>
   );
 };

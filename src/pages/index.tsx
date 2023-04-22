@@ -12,6 +12,7 @@ import Base from "../layouts/Base";
 import { GAMES } from "../mocks/games";
 import GameCard from "../components/GameCard";
 import Hero from "../components/Hero";
+import SMR from "../assets/SMR";
 
 export default function Home() {
   return (
@@ -59,14 +60,27 @@ export default function Home() {
               boxShadow: 1,
               overflow: "hidden",
               my: 4,
+              position: "relative",
             }}
           >
+            <Box
+              sx={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                background:
+                  "linear-gradient(90deg, rgba(22, 22, 22, 0) 0%, rgba(22, 22, 22, 1) 100%)",
+              }}
+            />
             <Box
               sx={{
                 display: "flex",
                 alignItems: "center",
                 gap: 4,
                 p: 4,
+                position: "relative",
               }}
             >
               <Box sx={{ flex: 1 }}>
@@ -89,6 +103,7 @@ export default function Home() {
                   </Button>
                 </Link>
               </Box>
+              <SMR />
             </Box>
           </Box>
           <Typography variant="h5" sx={{ mt: 2 }}>
