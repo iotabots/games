@@ -1,26 +1,39 @@
 import React from "react";
+import { Inter } from "next/font/google";
+
 import { Box, CssBaseline } from "@mui/material";
+
 import { Header } from "../components/Header";
+import { Network } from "../components/Network";
 
 interface Props {
+  hero?: React.ReactNode;
   children: React.ReactNode;
 }
 
-const Base: React.FC<Props> = ({ children }) => {
+const inter = Inter({ subsets: ["latin"] });
+
+const Base: React.FC<Props> = ({ children, hero }) => {
   return (
-    <main>
-      <Box sx={styles}>
+    <main className={inter.className}>
+      <Box sx={styles} className={hero ? "hero" : ""}>
         <CssBaseline />
         <Header />
+        {hero}
         {children}
+        <Network />
       </Box>
     </main>
   );
 };
 
 const styles = {
-  pt: "140px",
   pb: "80px",
+  pt: "140px",
+
+  "&.hero": {
+    pt: 0,
+  },
 };
 
 export default Base;

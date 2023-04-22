@@ -1,8 +1,6 @@
 import Head from "next/head";
-import { Inter } from "next/font/google";
 import {
   Box,
-  Button,
   Container,
   Link,
   List,
@@ -12,8 +10,7 @@ import {
 import Base from "../layouts/Base";
 import { GAMES } from "../mocks/games";
 import GameCard from "../components/GameCard";
-
-const inter = Inter({ subsets: ["latin"] });
+import Hero from "../components/Hero";
 
 export default function Home() {
   return (
@@ -24,14 +21,17 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Base>
+      <Base hero={<Hero image={GAMES[0].image} />}>
         <Container maxWidth="md">
-          <Typography variant="h6" gutterBottom color="text.secondary">
+          <Typography
+            variant="caption"
+            fontSize={14}
+            gutterBottom
+            color="text.secondary"
+          >
             *BEE* *BOB* *BOO*
           </Typography>
-          <Typography variant="h1" sx={{ mb: 1 }}>
-            Enter the Multiverse
-          </Typography>
+          <Typography variant="h1">Enter the Multiverse</Typography>
           <Typography color="text.secondary">
             On the 2nd November 2021, the first 500 IOTABOTS were minted for
             free on the public IOTA Smart Contracts EVM Testnet. More drops

@@ -6,7 +6,6 @@ import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
 
 import IOTABOTS_ABI from "../../contracts/iotabots_abi.json";
-import GAME from "../../contracts/Game.json";
 import TOKEN from "../../contracts/Token.json";
 
 import { Container, Typography, Card, CardContent, Box } from "@mui/material";
@@ -19,6 +18,10 @@ import Leaderboard from "../../components/Leaderboard";
 import Balance from "./components/Balance";
 import Bot from "./components/Bot";
 import BotLoading from "./components/BotLoading";
+import { GAMES } from "../../mocks/games";
+import Hero from "../../components/Hero";
+import useTokenBalance from "../../hooks/useTokenBalance";
+import Rules from "./components/Rules";
 
 interface Bot {
   attributes: Array<object>;
@@ -40,7 +43,7 @@ export default function Iotabots() {
   async function loadGame() {
     const provider = new ethers.providers.Web3Provider(library.provider);
 
-    let token = new ethers.Contract(ADDRESSES.eggsAddr, TOKEN.abi, provider);
+    let token = new ethers.Contract(ADDRESSES.eggsAddr, TOKEN, provider);
     let playerTokenBanlance = await token.balanceOf(account);
     playerTokenBanlance = ethers.utils.formatEther(playerTokenBanlance);
     let totalSupply = await token.totalSupply();
@@ -91,25 +94,46 @@ export default function Iotabots() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Base>
-        <Container maxWidth="sm">
-          <Balance playerBalance={playerTokens} totalSupply={tokenSupply} />
-          <Box>
-            <Typography variant="h3" align="center" gutterBottom>
-              Your IOTABOTS
-            </Typography>
-            <Box sx={{ textAlign: "center" }}>
-              {bots &&
-                bots.map(({ image, name, edition }, index) => (
-                  <Bot
-                    key={index}
-                    id={edition}
-                    image={image}
-                    name={name}
-                    refetchGame={loadGame}
-                  />
-                ))}
-              {!bots && <BotLoading />}
+      <Base hero={<Hero image={GAMES[0].image} />}>
+        <Container maxWidth="md">
+          <Box
+            sx={{
+              display: "flex",
+              gap: 4,
+              flexWrap: "wrap",
+            }}
+          >
+            <Box sx={{ flex: 1 }}>
+              <Typography variant="h3" sx={{ mb: 1 }}>
+                Rock, Paper, Scissors
+              </Typography>
+              <Typography color="text.secondary" sx={{ mb: 3 }}>
+                Play now against your IOTABOTS and collect EGGS from wining
+                Rock, Paper, Scissors against them. Good luck!
+              </Typography>
+              {account && library.provider && (
+                <Balance
+                  playerBalance={playerTokens}
+                  totalSupply={tokenSupply}
+                  account={account}
+                />
+              )}
+              <Box sx={{ textAlign: "center" }}>
+                {bots &&
+                  bots.map(({ image, name, edition }, index) => (
+                    <Bot
+                      key={index}
+                      id={edition}
+                      image={image}
+                      name={name}
+                      refetchGame={loadGame}
+                    />
+                  ))}
+                {!bots && <BotLoading />}
+              </Box>
+            </Box>
+            <Box sx={{ flex: 1 }}>
+              <Rules />
             </Box>
           </Box>
         </Container>
@@ -127,55 +151,7 @@ export default function Iotabots() {
                     marginTop: "50px",
                   }}
                 >
-                  <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h6" component="h6">
-                      Rules
-                    </Typography>
-                    <Box>
-                      <ol>
-                        <li>
-                          Each player must connect their wallet to the
-                          IOTABOTVERSE platform and hold an IOTABOT (ERC721
-                          Token) to participate in the game.
-                        </li>
-                        <li>
-                          Players can only play against their own IOTABOT.
-                        </li>
-                        <li>
-                          Each game round consists of one move: Rock, Paper, or
-                          Scissors.
-                        </li>
-                        <li>
-                          To initiate a game, the player must submit a move by
-                          signing a transaction on the ShimmerEVM network.
-                        </li>
-                        <li>
-                          The IOTABOT will automatically submit its move, which
-                          can be determined randomly or based on predefined
-                          logic.
-                        </li>
-                        <li>
-                          Once both moves have been submitted, the smart
-                          contract will determine the winner using the standard
-                          Rock Paper Scissors rules:
-                          <ul>
-                            <li>Rock beats Scissors</li>
-                            <li>Scissors beats Paper</li>
-                            <li>Paper beats Rock</li>
-                          </ul>
-                        </li>
-                        <li>
-                          If the player wins, they are awarded 10 EGGS tokens.
-                        </li>
-                        <li>
-                          In case of a tie or a loss, the game is declared a
-                          draw or a loss respectively, and no rewards will be
-                          distributed.
-                        </li>
-                        <li>Have fun!</li>
-                      </ol>
-                    </Box>
-                  </CardContent>
+                  <CardContent sx={{ flexGrow: 1 }}></CardContent>
                 </Card>
               </Container>
               <Card
@@ -257,3 +233,5 @@ export default function Iotabots() {
     </>
   );
 }
+
+const styles = {};

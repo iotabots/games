@@ -4,13 +4,14 @@ import Link from "next/link";
 
 export const Logo: React.FC<BoxProps> = (props) => {
   return (
-    <Link href="/">
-      <Box
-        {...props}
-        sx={{
-          "&:hover": { cursor: "pointer" },
-        }}
-      >
+    <Box
+      sx={{
+        display: "flex !important",
+        alignItems: "center",
+        "&:hover": { cursor: "pointer" },
+      }}
+    >
+      <Link href="/">
         <svg
           width="78"
           height="41"
@@ -41,8 +42,8 @@ export const Logo: React.FC<BoxProps> = (props) => {
             fill="white"
           />
         </svg>
-      </Box>
-    </Link>
+      </Link>
+    </Box>
   );
 };
 

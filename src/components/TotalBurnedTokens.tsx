@@ -15,11 +15,7 @@ const TotalBurnedTokens = ({ tokenAddress }: any) => {
 
       const provider = new ethers.providers.Web3Provider(library.provider);
 
-      const tokenContract = new ethers.Contract(
-        tokenAddress,
-        TOKEN.abi,
-        provider
-      );
+      const tokenContract = new ethers.Contract(tokenAddress, TOKEN, provider);
       try {
         const burnedTokens = await tokenContract.balanceOf(deadAddress);
         setTotalBurnedTokens(ethers.utils.formatUnits(burnedTokens, 18));

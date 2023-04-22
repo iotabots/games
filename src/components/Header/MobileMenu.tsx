@@ -3,13 +3,9 @@ import { Box, Menu } from "@mui/material";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import { IconButtonFancy } from "../IconButtonFancy";
 import MenuItem, { MenuItemProps } from "./MenuItem";
+import { MOBILE_MENU } from "./config";
 
-interface MenuProps {
-  menu: MenuItemProps[];
-}
-
-const MobileMenu: React.FC<MenuProps> = (props) => {
-  const { menu } = props;
+const MobileMenu: React.FC = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const mobileMenuId = "mobile-menu";
@@ -59,7 +55,7 @@ const MobileMenu: React.FC<MenuProps> = (props) => {
           },
         }}
       >
-        {menu.map((item) => {
+        {MOBILE_MENU.map((item) => {
           return (
             <MenuItem {...item} key={item.label}>
               {item.label}

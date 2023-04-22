@@ -1,6 +1,6 @@
 import { Box, Button, Typography } from "@mui/material";
 import React from "react";
-import { transition } from "../theme";
+import { transitions } from "../theme";
 
 interface Props {
   id: number;
@@ -55,7 +55,7 @@ const styles = {
     left: 0,
     width: "100%",
     height: "100%",
-    transition: transition,
+    transition: transitions[300],
   },
 
   content: {
@@ -63,7 +63,7 @@ const styles = {
     position: "relative",
     backgroundColor: "rgba(0,0,0,.66)",
     opacity: 0,
-    transition: transition,
+    transition: transitions[300],
 
     ".MuiTypography-root": {
       color: "common.white",

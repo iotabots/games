@@ -10,7 +10,7 @@
 }
 
 .matrixRain {
-  font-family: "Courier New", monospace;
+  font-family: "matrix";
   font-size: 16px;
   color: #00ff33;
   position: fixed;
@@ -21,4 +21,8 @@
 
 a {
   text-decoration: none;
+}
+
+h1 {
+  font-family: "Matrix";
 }

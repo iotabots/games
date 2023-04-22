@@ -16,30 +16,10 @@ const MenuItem: React.FC<MenuItemProps> = (props) => {
 
   return (
     <Link href={href}>
-      <Box
-        {...props}
-        sx={{
-          minWidth: "100px",
-          height: "42px",
-          px: 5,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          bgcolor: active ? "rgba(255,255,255,1)" : "transparent",
-          color: active ? "black" : "rgba(255,255,255,1)",
-          borderRadius: "8px",
-          "&:hover": {
-            cursor: "pointer",
-            bgcolor: "primary.main",
-            color: "common.white",
-          },
-        }}
-      >
+      <Box {...props} sx={styles.root} className={active ? "active" : ""}>
         <Typography
           sx={{
-            textAlign: "center",
-            fontFamily: "Roboto Serif",
-            fontSize: 18,
+            fontSize: 16,
             fontWeight: "600",
           }}
         >
@@ -48,6 +28,32 @@ const MenuItem: React.FC<MenuItemProps> = (props) => {
       </Box>
     </Link>
   );
+};
+
+const styles = {
+  root: {
+    minWidth: "100px",
+    height: "42px",
+    px: 5,
+    display: "flex",
+    fontSize: "14px",
+    justifyContent: "center",
+    alignItems: "center",
+    bgcolor: "transparent",
+    color: "rgba(255,255,255,1)",
+    borderRadius: "8px",
+
+    "&.active": {
+      bgcolor: "rgba(255,255,255,1)",
+      color: "black",
+    },
+
+    "&:hover": {
+      cursor: "pointer",
+      bgcolor: "primary.main",
+      color: "common.white",
+    },
+  },
 };
 
 export default MenuItem;
