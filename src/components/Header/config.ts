@@ -16,7 +16,6 @@ export const SOONABOTS = {
 export const Info = {
   label: "Info",
   href: "/info",
-  active: true,
 };
 
 export const Stake = {

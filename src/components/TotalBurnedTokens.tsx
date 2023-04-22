@@ -13,10 +13,7 @@ const TotalBurnedTokens = ({ tokenAddress }: any) => {
     const fetchTotalBurnedTokens = async () => {
       if (!library || !ethers.utils.isAddress(tokenAddress)) return;
 
-      console.log("library.currentProvider", library.currentProvider);
-      const provider = new ethers.providers.Web3Provider(
-        library.currentProvider
-      );
+      const provider = new ethers.providers.Web3Provider(library.provider);
 
       const tokenContract = new ethers.Contract(
         tokenAddress,
@@ -30,7 +27,7 @@ const TotalBurnedTokens = ({ tokenAddress }: any) => {
         console.error(`Error fetching total burned tokens: ${error.message}`);
       }
     };
-    if (library.currentProvider) {
+    if (library.provider) {
       fetchTotalBurnedTokens();
     }
   }, [library, tokenAddress]);

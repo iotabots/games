@@ -11,9 +11,7 @@ const Leaderboard = ({ contractAddress, top = 10 }: any) => {
 
   useEffect(() => {
     const fetchLeaderboard = async () => {
-      const provider = new ethers.providers.Web3Provider(
-        library.currentProvider
-      );
+      const provider = new ethers.providers.Web3Provider(library.provider);
       if (!provider || !ethers.utils.isAddress(contractAddress)) return;
 
       const contract = new ethers.Contract(contractAddress, abi, provider);
@@ -33,7 +31,7 @@ const Leaderboard = ({ contractAddress, top = 10 }: any) => {
         console.error(`Error fetching leaderboard: ${error.message}`);
       }
     };
-    if (library.currentProvider) {
+    if (library.provider) {
       fetchLeaderboard();
     }
   }, [library, contractAddress, top]);

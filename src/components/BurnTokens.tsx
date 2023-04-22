@@ -10,7 +10,7 @@ const BurnTokens = ({ contractAddress, tokenContractAddress }: any) => {
   const [amount, setAmount] = useState("");
   const [status, setStatus] = useState("");
   const burnTokens = async () => {
-    const provider = new ethers.providers.Web3Provider(library.currentProvider);
+    const provider = new ethers.providers.Web3Provider(library.provider);
     if (!provider) {
       setStatus("No provider available");
       return;
@@ -36,7 +36,7 @@ const BurnTokens = ({ contractAddress, tokenContractAddress }: any) => {
   };
 
   const approveContract = async () => {
-    const provider = new ethers.providers.Web3Provider(library.currentProvider);
+    const provider = new ethers.providers.Web3Provider(library.provider);
     if (!provider) {
       setStatus("No provider available");
       return;

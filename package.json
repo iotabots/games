@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "compile-contract-types": "typechain --target ethers-v5 --out-dir './contracts/types' './contracts/*.json'"
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",

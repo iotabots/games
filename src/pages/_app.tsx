@@ -5,7 +5,6 @@ import { Web3ReactProvider } from "@web3-react/core";
 
 import { ThemeProvider } from "@mui/material";
 
-import { IdentityProvider } from "../providers/Identity";
 import { THEME } from "../theme";
 import "../styles/globals.css";
 
@@ -19,9 +18,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider theme={THEME}>
       <Web3ReactProvider getLibrary={getLibrary}>
-        <IdentityProvider>
-          <Component {...pageProps} />
-        </IdentityProvider>
+        <Component {...pageProps} />
       </Web3ReactProvider>
     </ThemeProvider>
   );
