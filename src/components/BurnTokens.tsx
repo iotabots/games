@@ -5,11 +5,7 @@ import Typography from "@mui/material/Typography";
 import TOKEN from "../contracts/Token.json";
 
 import { useWeb3React } from "@web3-react/core";
-const BurnTokens = ({
-  _provider,
-  contractAddress,
-  tokenContractAddress,
-}: any) => {
+const BurnTokens = ({ contractAddress, tokenContractAddress }: any) => {
   const { library } = useWeb3React();
   const [amount, setAmount] = useState("");
   const [status, setStatus] = useState("");
