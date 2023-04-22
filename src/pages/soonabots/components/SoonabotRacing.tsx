@@ -33,7 +33,7 @@ const soonabotAddr = "0x2f5C574ddF275b4cDfAE26fE8e75621c4B7E106e"; // Test Token
 export const SoonabotRacing = () => {
   const { account, library } = useWeb3React();
 
-  const { data, isFetched, error } = useSoonabots(
+  const { data, isFetched, error, refetch } = useSoonabots(
     account || "",
     ADDRESSES.soonabotsAddr
   );
@@ -58,15 +58,28 @@ export const SoonabotRacing = () => {
     }, 3000);
   };
 
-  const checkPlayedBots = async () => {
+  const checkPlayedBots = async (_bots?: any) => {
     let array: any = [];
-    bots.forEach((bot: any) => {});
-    for (let index = 0; index < bots.length; index++) {
-      const bot = bots[index];
-      array.push({
-        id: bot.tokenId,
-        canPlay: true,
+    if (_bots) {
+      console.log("_bots set", _bots);
+      array = _bots.map((bot: any) => {
+        console.log("bot", bot);
+        return {
+          id: bot,
+          canPlay: true,
+        };
       });
+    } else {
+      console.log("bots not set", bots);
+      if (bots.length === 0) return
+      bots.forEach((bot: any) => {});
+      for (let index = 0; index < bots.length; index++) {
+        const bot = bots[index];
+        array.push({
+          id: bot.tokenId,
+          canPlay: true,
+        });
+      }
     }
     console.log("array", array);
     setAvailableBots(array);
@@ -91,9 +104,7 @@ export const SoonabotRacing = () => {
           race = await contract.getRace(raceId);
           races.push(race);
           raceId++;
-          console.log("race", race);
         } catch (error) {
-          console.log("error", error);
           race = null;
         }
       } while (race);
@@ -105,13 +116,16 @@ export const SoonabotRacing = () => {
       checkPlayedBots();
     };
 
-    fetchRaces();
     if (account && data && isFetched) {
+      fetchRaces();
       console.log("soonabot sdata", data);
       if (data.hasOwnProperty("error")) {
         console.error("Das läuft net");
       } else {
+        console.log("Das läuft:", data);
         setBots(data as number[]);
+        checkPlayedBots(data as number[]);
+        refetch()
       }
     }
   }, [account, library, loading]);
@@ -165,13 +179,14 @@ export const SoonabotRacing = () => {
       </Box>
       <FormControl fullWidth margin="normal">
         <InputLabel id="soonabot-select-label">Soonabot ID</InputLabel>
+        {availableBots.length}
         <Select
           labelId="soonabot-select-label"
           value={soonabotId}
           onChange={handleSoonabotIdChange}
           fullWidth
         >
-          {availableBots.map((bot: any) => (
+          {data && availableBots.map((bot: any) => (
             <MenuItem key={bot.id} value={bot.id}>
               {bot.id}
             </MenuItem>
