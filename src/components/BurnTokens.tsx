@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { ethers } from "ethers";
-import abi from "../contracts/EGGSBurnLeaderboard.json"; // Import the contract ABI
-import Typography from "@mui/material/Typography";
+import abi from "../contracts/EGGSBurnLeaderboard.json";
 import TOKEN from "../contracts/Token.json";
 
 import { useWeb3React } from "@web3-react/core";
+import { Box, Button, TextField, Typography } from "@mui/material";
+
 const BurnTokens = ({ contractAddress, tokenContractAddress }: any) => {
-  const { library } = useWeb3React();
-  const [amount, setAmount] = useState("");
+  const { library, active } = useWeb3React();
+  const [amount, setAmount] = useState<number>(0);
   const [status, setStatus] = useState("");
+
   const burnTokens = async () => {
     const provider = new ethers.providers.Web3Provider(library.provider);
     if (!provider) {
@@ -26,7 +28,9 @@ const BurnTokens = ({ contractAddress, tokenContractAddress }: any) => {
 
     try {
       setStatus("Sending transaction...");
-      const tx = await contract.burnTokens(ethers.utils.parseUnits(amount, 18));
+      const tx = await contract.burnTokens(
+        ethers.utils.parseUnits(String(amount), 18)
+      );
       setStatus("Transaction sent, waiting for confirmation...");
       await tx.wait();
       setStatus("Transaction confirmed, tokens burned");
@@ -48,11 +52,11 @@ const BurnTokens = ({ contractAddress, tokenContractAddress }: any) => {
     }
 
     const signer = provider.getSigner();
-    const amountToApprove = ethers.utils.parseUnits(amount, 18);
+    const amountToApprove = ethers.utils.parseUnits(String(amount), 18);
 
     try {
       setStatus("Sending approval transaction...");
-      let token = new ethers.Contract(tokenContractAddress, TOKEN.abi, signer);
+      let token = new ethers.Contract(tokenContractAddress, TOKEN, signer);
       const tx = await token.approve(contractAddress, amountToApprove);
       setStatus("Approval transaction sent, waiting for confirmation...");
       await tx.wait();
@@ -63,23 +67,43 @@ const BurnTokens = ({ contractAddress, tokenContractAddress }: any) => {
   };
 
   return (
-    <div>
-      <Typography gutterBottom variant="h4" component="h4">
-        Burn EGGS Tokens
-      </Typography>
-      <div>
-        <input
-          type="number"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          placeholder="Amount to burn"
-        />
-        <button onClick={approveContract}>Approve Contract</button>
+    <Box
+      sx={{
+        p: 4,
+        bgcolor: "background.paper",
+      }}
+    >
+      {active && (
+        <Box sx={{ display: "flex", gap: 4 }}>
+          <TextField
+            sx={{
+              flex: 1,
+            }}
+            type="number"
+            variant="filled"
+            value={amount}
+            onChange={(e) => setAmount(Number(e.target.value))}
+            label="Amount to burn"
+          />
+          <Button
+            variant="contained"
+            onClick={approveContract}
+            disabled={amount <= 0}
+          >
+            Approve Contract
+          </Button>
 
-        <button onClick={burnTokens}>Burn Tokens</button>
-      </div>
-      {status && <p>{status}</p>}
-    </div>
+          <Button
+            variant="contained"
+            disabled={amount <= 0}
+            onClick={burnTokens}
+          >
+            Burn Tokens
+          </Button>
+        </Box>
+      )}
+      {status && <Typography>{status}</Typography>}
+    </Box>
   );
 };
 

@@ -58,11 +58,10 @@ export const THEME = createTheme({
     mode: "dark",
     primary: {
       main: "#0FD698",
+      contrastText: "#fff",
     },
     secondary: {
-      light: "#757ce8",
-      main: "#2b2b2b",
-      dark: "#002884",
+      main: "#121212",
       contrastText: "#fff",
     },
     background: {
@@ -76,20 +75,9 @@ export const THEME = createTheme({
       styleOverrides: {
         root: {
           textDecoration: "none",
+          textTransform: "none",
           "&.MuiButton-containedPrimary": {
             color: "#ffffff",
-          },
-        },
-      },
-    },
-    MuiTextField: {
-      styleOverrides: {
-        root: {
-          "& label.Mui-focused": {
-            color: "#00ff33",
-          },
-          "& .MuiInput-underline:after": {
-            borderBottomColor: "#00ff33",
           },
         },
       },

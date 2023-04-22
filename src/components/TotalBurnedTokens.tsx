@@ -4,6 +4,7 @@ import { ethers } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 
 import TOKEN from "../contracts/Token.json";
+import KPI from "./KPI";
 
 const TotalBurnedTokens = ({ tokenAddress }: any) => {
   const [totalBurnedTokens, setTotalBurnedTokens] = useState("");
@@ -23,17 +24,12 @@ const TotalBurnedTokens = ({ tokenAddress }: any) => {
         console.error(`Error fetching total burned tokens: ${error.message}`);
       }
     };
-    if (library.provider) {
+    if (library?.provider) {
       fetchTotalBurnedTokens();
     }
   }, [library, tokenAddress]);
 
-  return (
-    <div>
-      <h2>Total Burned Tokens</h2>
-      <p>{totalBurnedTokens ? `${totalBurnedTokens} EGGS` : "Loading..."}</p>
-    </div>
-  );
+  return <KPI label="Total Burned Tokens" value={totalBurnedTokens} />;
 };
 
 export default TotalBurnedTokens;

@@ -22,9 +22,11 @@ const GameCard: React.FC<Props> = (props) => {
         }}
       />
       <Box className="game-card__content" sx={styles.content}>
-        <Typography variant="h3">{name}</Typography>
+        <Typography variant="h4">{name}</Typography>
         <Typography sx={{ mb: 2 }}>{description}</Typography>
-        <Button variant="contained">Play now</Button>
+        <Button variant="contained" size="large">
+          Play now
+        </Button>
       </Box>
     </Box>
   );
@@ -36,11 +38,14 @@ const styles = {
     borderRadius: 2,
     overflow: "hidden",
     boxShadow: 1,
+    height: 220,
+    flex: 1,
 
     "&:hover": {
       "& .game-card__image": {
         transform: "scale(1.1)",
       },
+
       "& .game-card__content": {
         opacity: 1,
       },
@@ -64,6 +69,7 @@ const styles = {
     backgroundColor: "rgba(0,0,0,.66)",
     opacity: 0,
     transition: transitions[300],
+    height: "100%",
 
     ".MuiTypography-root": {
       color: "common.white",

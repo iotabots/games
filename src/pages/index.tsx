@@ -1,6 +1,7 @@
 import Head from "next/head";
 import {
   Box,
+  Button,
   Container,
   Link,
   List,
@@ -51,6 +52,45 @@ export default function Home() {
             not only test our dApp but also offer you the chance to win
             fantastic rewards. 🎁
           </Typography>
+          <Box
+            sx={{
+              bgcolor: "primary.main",
+              borderRadius: 2,
+              boxShadow: 1,
+              overflow: "hidden",
+              my: 4,
+            }}
+          >
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                gap: 4,
+                p: 4,
+              }}
+            >
+              <Box sx={{ flex: 1 }}>
+                <Typography gutterBottom variant="h4">
+                  Get Test Tokens
+                </Typography>
+                <Typography>
+                  You can get test tokens for free from Faucet.
+                </Typography>
+                <Link
+                  target="_blank"
+                  href="https://evm-toolkit.evm.testnet.shimmer.network/"
+                >
+                  <Button
+                    sx={{ height: 40, mt: 2 }}
+                    color="secondary"
+                    variant="contained"
+                  >
+                    Get Shimmer (SMR)
+                  </Button>
+                </Link>
+              </Box>
+            </Box>
+          </Box>
           <Typography variant="h5" sx={{ mt: 2 }}>
             Join the Treasury of Shimmer Event: A Thrilling Adventure Awaits
             You.
