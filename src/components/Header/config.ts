@@ -28,6 +28,6 @@ export const Profile = {
   href: "/profile",
 };
 
-export const MENU = [IOTABOTS, SOONABOTS, Info, Stake];
+export const MENU = [IOTABOTS, SOONABOTS, Stake, Info];
 
 export const MOBILE_MENU = [Home, ...MENU, Profile];
