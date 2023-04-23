@@ -5,45 +5,42 @@ import IERC721Enumerable from "../../../contracts/IERC721Enumerable.json";
 import IERC721Metadata from "../../../contracts/IERC721Metadata.json";
 import { ethers } from "ethers";
 import axios from "axios";
+import { getStakedNFTs, loadNfts } from "./utils";
+import { UnStakedNFTCard } from "./UnStakedNFTCard";
+
+const APES_ADDR = "0xE3cA4D93277cDFf239032E08A7383ea6775b6A95";
+const APES_STAKING_ADDR = "";
 
 export const StakeApes = () => {
   const { active, account, library, activate, deactivate, chainId } =
     useWeb3React();
-  const [apes, setApes] = useState<any>([]);
+
+  const [nfts, setNfts] = useState<any>([]);
+  const [stakedNfts, setStakedNfts] = useState<any>([]);
 
   useEffect(() => {
     if (active && account) {
-      loadApes("0xE3cA4D93277cDFf239032E08A7383ea6775b6A95");
+      loadNfts(library, APES_ADDR, account).then((data) => {
+        console.log("nfts", data);
+        loadMetadata(data);
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active, account]);
 
-  async function loadApes(addr: any) {
-    //tokenOfOwnerByIndex
+  async function loadMetadata(_nfts: Array<any>) {
     const provider = new ethers.providers.Web3Provider(library.provider);
-    let contract_Enumerable = new ethers.Contract(
-      addr,
-      IERC721Enumerable.abi,
-      provider
-    );
+
     let contract_Metadata = new ethers.Contract(
-      addr,
+      APES_ADDR,
       IERC721Metadata.abi,
       provider
     );
-    console.log("ape contract", contract_Enumerable);
-    console.log("ape account", account);
-    const data1 = await contract_Enumerable.supportsInterface("0x80ac58cd");
-    console.log("ape data1", data1);
-    const balance = await contract_Enumerable.balanceOf(account);
-    let array = [];
-    for (let index = 0; index < balance.toNumber(); index++) {
-      const data = await contract_Enumerable.tokenOfOwnerByIndex(
-        account,
-        index
-      );
-      const token_index = data.toNumber();
 
+    let array = [];
+
+    for (let index = 0; index < _nfts.length; index++) {
+      const token_index = _nfts[index].tokenId;
       let metadata_url = await contract_Metadata.tokenURI(token_index);
       console.log("metadata_url:", metadata_url);
       metadata_url = metadata_url.replace("ipfs://", "");
@@ -60,39 +57,24 @@ export const StakeApes = () => {
       };
       array.push(obj);
     }
-    console.log("ape apes", apes);
-    array = apes.concat(array);
-    console.log("array");
-    setApes(array);
+    setNfts(array);
   }
+
   return (
     <div>
       <Typography variant="h4">Stake Apes</Typography>
       <Typography variant="h6">Coming soon...</Typography>
       <hr />
       <Grid container spacing={1}>
-        {apes.length > 0 &&
-          apes.map((a: any) => {
+        {nfts.length > 0 &&
+          nfts.map((a: any, index: number) => {
             return (
               <div key={a.tokenId}>
-                <Card
-                  sx={{
-                    width: "200px",
-                  }}
-                >
-                  <CardMedia
-                    height="100px"
-                    width={"100px"}
-                    component="img"
-                    image={a.url}
-                    alt=""
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="body1" component="div">
-                      APE #{a.tokenId}
-                    </Typography>
-                  </CardContent>
-                </Card>
+                <div key={index}>
+                  {account && (
+                    <UnStakedNFTCard stakeAddress={APES_STAKING_ADDR} nft={a} />
+                  )}
+                </div>
               </div>
             );
           })}

@@ -2,10 +2,11 @@ import Head from "next/head";
 import React from "react";
 import Base from "../../layouts/Base";
 import { Container, Typography } from "@mui/material";
-import { NftStake } from "./components/NftStake";
 import { StakeApes } from "./components/StakeApes";
 import { StakeLilApes } from "./components/StakeLilApes";
 import { StakeIOTAHeros } from "./components/StakeIOTAHeros";
+import { StakeSoonabots } from "./components/StakeSoonabots";
+import { ADDRESSES } from "../../contracts/addresses";
 
 export default function Stake() {
   return (
@@ -19,7 +20,7 @@ export default function Stake() {
       <Base>
         <Container maxWidth="md">
           <Typography variant="h1">Stake</Typography>
-          <NftStake />
+          <StakeSoonabots />
           <StakeApes />
           <StakeLilApes />
           <StakeIOTAHeros />
