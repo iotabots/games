@@ -6,11 +6,14 @@ import { ADDRESSES } from "../../../contracts/addresses";
 import { getStakedNFTs, loadNfts } from "./utils";
 import { UnStakedNFTCard } from "./UnStakedNFTCard";
 import { StakedNFTCard } from "./StakedNFTCard";
+import useSoonabots from "../../../hooks/contracts/useSoonabots";
 
 export const StakeSoonabots = () => {
   const { active, account, library } = useWeb3React();
   const [nfts, setNfts] = useState<any>([]);
   const [stakedNfts, setStakedNfts] = useState<any>([]);
+
+  const { data } = useSoonabots(account || "", ADDRESSES.soonabotsAddr);
 
   useEffect(() => {
     if (active && account) {
@@ -24,7 +27,7 @@ export const StakeSoonabots = () => {
       );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [active, account]);
+  }, [active, account, data]);
 
   return (
     <div>

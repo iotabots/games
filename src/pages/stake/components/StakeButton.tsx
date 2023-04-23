@@ -5,6 +5,7 @@ import { Box, Typography, Button } from "@mui/material";
 
 import NftStakeArtifact from "../../../contracts/NftStake.json";
 import NftArtifact from "../../../contracts/IERC721.json";
+import useSoonabots from "../../../hooks/contracts/useSoonabots";
 import { ADDRESSES } from "../../../contracts/addresses";
 
 interface NftProps {
@@ -25,6 +26,9 @@ export const StakeButton: React.FC<Props> = (props) => {
   const [message, setMessage] = useState("");
 
   const { account, library } = useWeb3React();
+
+  const { refetch } = useSoonabots(account || "", ADDRESSES.soonabotsAddr);
+
   useEffect(() => {
     if (library && account) {
       const provider = new ethers.providers.Web3Provider(library.provider);
@@ -55,6 +59,7 @@ export const StakeButton: React.FC<Props> = (props) => {
         console.log("NFT staked:", result);
         nft.staked = true;
         await result.wait();
+        refetch();
       } catch (error: any) {
         setMessage(`❌ Error staking NFT: ${error.message}`);
         console.error("Error staking NFT:", error);
