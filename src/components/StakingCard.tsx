@@ -22,6 +22,7 @@ const StakingCard: React.FC<Props> = (props) => {
         borderRadius: 2,
         boxShadow: 1,
         minWidth: 200,
+        overflow: "hidden",
       }}
     >
       {image && (
