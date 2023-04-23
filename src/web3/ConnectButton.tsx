@@ -35,8 +35,9 @@ export const ConnectButton: React.FC = () => {
 
   return (
     <Button
-      size="small"
-      color="secondary"
+      size="large"
+      color="primary"
+      variant="contained"
       disabled={disabled}
       onClick={(): void => {
         console.log("hello world!");
