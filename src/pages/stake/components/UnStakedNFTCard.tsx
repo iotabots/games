@@ -1,17 +1,8 @@
-import React, { useState, useEffect } from "react";
-import {
-  Box,
-  Button,
-  Typography,
-  TextField,
-  Card,
-  CardContent,
-  CardMedia,
-} from "@mui/material";
+import React, { useEffect } from "react";
 import { useWeb3React } from "@web3-react/core";
-import { ethers } from "ethers";
+
 import { StakeButton } from "./StakeButton";
-import { ADDRESSES } from "../../../contracts/addresses";
+import StakingCard from "../../../components/StakingCard";
 
 interface NftProps {
   tokenId: number;
@@ -27,27 +18,15 @@ export const UnStakedNFTCard: React.FC<Props> = (props) => {
 
   const { account } = useWeb3React();
 
-  useEffect(() => {}, [account, nft]);
-
   return (
-    <Card
-      sx={{
-        width: "200px",
-      }}
-    >
-      <CardMedia
-        height="100px"
-        width={"100px"}
-        component="img"
-        image={nft?.url}
-        alt=""
-      />
-      <CardContent>
-        <Typography gutterBottom variant="body1" component="div">
-          Soonabot #{nft?.tokenId}
-        </Typography>
-        {account && <StakeButton nft={nft} stakeAddress={stakeAddress} />}
-      </CardContent>
-    </Card>
+    <>
+      {account && (
+        <StakingCard
+          name={`Soonabot #${nft?.tokenId}`}
+          image={nft?.url}
+          stakeButton={<StakeButton nft={nft} stakeAddress={stakeAddress} />}
+        />
+      )}
+    </>
   );
 };

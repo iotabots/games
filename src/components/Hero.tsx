@@ -21,7 +21,7 @@ const styles = {
   root: {
     pt: 16,
     pb: 6,
-    height: "40vh",
+    height: "50vh",
     minHeight: "400px",
     bgcolor: "white",
     backgroundSize: "cover",

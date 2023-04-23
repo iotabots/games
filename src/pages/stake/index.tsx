@@ -1,12 +1,12 @@
-import Head from "next/head";
 import React from "react";
-import Base from "../../layouts/Base";
+import Head from "next/head";
 import { Container, Typography } from "@mui/material";
+
+import Base from "../../layouts/Base";
 import { StakeApes } from "./components/StakeApes";
 import { StakeLilApes } from "./components/StakeLilApes";
 import { StakeIOTAHeros } from "./components/StakeIOTAHeros";
 import { StakeSoonabots } from "./components/StakeSoonabots";
-import { ADDRESSES } from "../../contracts/addresses";
 
 export default function Stake() {
   return (
@@ -20,6 +20,9 @@ export default function Stake() {
       <Base>
         <Container maxWidth="md">
           <Typography variant="h1">Stake</Typography>
+          <Typography color="text.secondary" sx={{ mb: 4 }}>
+            Some explanation what staking is maybe?
+          </Typography>
           <StakeSoonabots />
           <StakeApes />
           <StakeLilApes />

@@ -1,23 +1,9 @@
 import React, { useState, useEffect } from "react";
-import {
-  Button,
-  Typography,
-  CircularProgress,
-  Box,
-  List,
-  ListItem,
-  ListItemText,
-  FormControl,
-  Select,
-  MenuItem,
-  InputLabel,
-  Skeleton,
-} from "@mui/material";
+import { Button, Typography, Box, Skeleton } from "@mui/material";
 
 import { ethers } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 
-// ABIs
 import SoonabotRacingABI from "../../../contracts/SoonabotRace.json";
 import ERC20ABI from "../../../contracts/Token.json";
 
@@ -27,7 +13,6 @@ import useSoonabots from "../../../hooks/contracts/useSoonabots";
 import KPI from "../../../components/KPI";
 import Rank from "../../../components/Rank";
 
-// Contract addresses
 const eggsTokenAddress = "0xdFCF738225F6508F7A664c3c7D236432501e16d4"; // Test Token
 
 export const SoonabotRacing = () => {
@@ -38,18 +23,13 @@ export const SoonabotRacing = () => {
     ADDRESSES.soonabotsAddr
   );
 
-  console.log("data", data);
-
-  const treasuryEventStartDate = new Date("2023-05-03T15:00:00"); // Update this to the actual event start date and time
+  // TODO: Update this to the actual event start date and time
+  const treasuryEventStartDate = new Date("2023-05-03T15:00:00");
   const [balance, setBalance] = useState(0);
   const [races, setRaces] = useState<Array<any>>([]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-  const [availableBots, setAvailableBots] = useState([
-    { id: 1, canPlay: true },
-    { id: 2, canPlay: false },
-    { id: 3, canPlay: true },
-  ]);
+
   const showMessage = (message: string) => {
     setMessage(message);
     setTimeout(() => {
@@ -75,14 +55,12 @@ export const SoonabotRacing = () => {
           race = await contract.getRace(raceId);
           races.push(race);
           raceId++;
-          console.log("race", race);
         } catch (error) {
           console.log("error", error);
           race = null;
         }
       } while (race);
 
-      console.log("races", races);
       let _balance = await contract.balanceOf(signer.getAddress());
       setBalance(_balance.toNumber());
       setRaces(races);
@@ -206,6 +184,7 @@ export const SoonabotRacing = () => {
           sx={{
             mt: 2,
             display: "flex",
+            gap: 2,
             flexDirection: "column",
           }}
         >

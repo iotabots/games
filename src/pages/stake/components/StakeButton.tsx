@@ -1,21 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
+import { useWeb3React } from "@web3-react/core";
+import { Box, Typography, Button } from "@mui/material";
+
 import NftStakeArtifact from "../../../contracts/NftStake.json";
 import NftArtifact from "../../../contracts/IERC721.json";
-import { useWeb3React } from "@web3-react/core";
 import { ADDRESSES } from "../../../contracts/addresses";
-
-import { Box, Typography, Button } from "@mui/material";
 
 interface NftProps {
   tokenId: number;
   url: string;
   staked?: boolean;
 }
+
 interface Props {
   stakeAddress: string;
   nft: NftProps;
 }
+
 export const StakeButton: React.FC<Props> = (props) => {
   const { nft, stakeAddress } = props;
 

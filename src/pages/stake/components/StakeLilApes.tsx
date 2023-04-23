@@ -1,27 +1,24 @@
-import { Card, CardContent, CardMedia, Grid, Typography } from "@mui/material";
-import { useWeb3React } from "@web3-react/core";
 import { useEffect, useState } from "react";
-import IERC721Enumerable from "../../../contracts/IERC721Enumerable.json";
-import IERC721Metadata from "../../../contracts/IERC721Metadata.json";
+import { useWeb3React } from "@web3-react/core";
+import { Box, Typography } from "@mui/material";
 import { ethers } from "ethers";
 import axios from "axios";
-import { getStakedNFTs, loadNfts } from "./utils";
+
+import IERC721Metadata from "../../../contracts/IERC721Metadata.json";
+import { loadNfts } from "./utils";
 import { UnStakedNFTCard } from "./UnStakedNFTCard";
 
 const NFT_ADDR = "0x58dFC21e4e55536Cbb01dC5b1d3eA2260Bf0264a";
 const NFT_STAKING_ADDR = "";
 
 export const StakeLilApes = () => {
-  const { active, account, library, activate, deactivate, chainId } =
-    useWeb3React();
+  const { active, account, library } = useWeb3React();
 
   const [nfts, setNfts] = useState<any>([]);
-  const [stakedNfts, setStakedNfts] = useState<any>([]);
 
   useEffect(() => {
     if (active && account) {
       loadNfts(library, NFT_ADDR, account).then((data) => {
-        console.log("nfts", data);
         loadMetadata(data);
       });
     }
@@ -62,10 +59,18 @@ export const StakeLilApes = () => {
 
   return (
     <div>
-      <Typography variant="h4">Stake Apes</Typography>
-      <Typography variant="h6">Coming soon...</Typography>
-      <hr />
-      <Grid container spacing={1}>
+      <Typography variant="h4">Lil Apes</Typography>
+      <Typography color="text.secondary">Coming soon</Typography>
+
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: 2,
+          mt: 2,
+          mb: 4,
+        }}
+      >
         {nfts.length > 0 &&
           nfts.map((a: any, index: number) => {
             return (
@@ -78,7 +83,7 @@ export const StakeLilApes = () => {
               </div>
             );
           })}
-      </Grid>
+      </Box>
     </div>
   );
 };

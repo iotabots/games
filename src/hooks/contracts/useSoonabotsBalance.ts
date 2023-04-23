@@ -1,9 +1,7 @@
-// import useSWR from "swr";
-import { useWeb3React } from "@web3-react/core";
-import useKeepSWRDataLiveAsBlocksArrive from "../useKeepSWRDataLiveAsBlocksArrive";
-import useBotsContract from "../useBotsContract";
-import { useQuery, useMutation } from "@tanstack/react-query";
 import { ethers } from "ethers";
+import { useQuery } from "@tanstack/react-query";
+
+import useBotsContract from "../useBotsContract";
 
 export default function useSoonabotsBalance(
   address: string,
@@ -28,12 +26,6 @@ export default function useSoonabotsBalance(
         });
     },
   });
-
-  const mutation = useMutation({
-    mutationFn: () => query.refetch(),
-  });
-
-  useKeepSWRDataLiveAsBlocksArrive(mutation.mutateAsync);
 
   return query;
 }

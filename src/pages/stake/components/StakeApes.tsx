@@ -1,27 +1,24 @@
-import { Card, CardContent, CardMedia, Grid, Typography } from "@mui/material";
-import { useWeb3React } from "@web3-react/core";
 import { useEffect, useState } from "react";
-import IERC721Enumerable from "../../../contracts/IERC721Enumerable.json";
-import IERC721Metadata from "../../../contracts/IERC721Metadata.json";
+import { Box, Typography } from "@mui/material";
+import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
 import axios from "axios";
-import { getStakedNFTs, loadNfts } from "./utils";
+
+import IERC721Metadata from "../../../contracts/IERC721Metadata.json";
+import { loadNfts } from "./utils";
 import { UnStakedNFTCard } from "./UnStakedNFTCard";
 
 const APES_ADDR = "0xE3cA4D93277cDFf239032E08A7383ea6775b6A95";
 const APES_STAKING_ADDR = "";
 
 export const StakeApes = () => {
-  const { active, account, library, activate, deactivate, chainId } =
-    useWeb3React();
+  const { active, account, library } = useWeb3React();
 
   const [nfts, setNfts] = useState<any>([]);
-  const [stakedNfts, setStakedNfts] = useState<any>([]);
 
   useEffect(() => {
     if (active && account) {
       loadNfts(library, APES_ADDR, account).then((data) => {
-        console.log("nfts", data);
         loadMetadata(data);
       });
     }
@@ -42,7 +39,6 @@ export const StakeApes = () => {
     for (let index = 0; index < _nfts.length; index++) {
       const token_index = _nfts[index].tokenId;
       let metadata_url = await contract_Metadata.tokenURI(token_index);
-      console.log("metadata_url:", metadata_url);
       metadata_url = metadata_url.replace("ipfs://", "");
 
       let res = await axios.get(
@@ -62,23 +58,28 @@ export const StakeApes = () => {
 
   return (
     <div>
-      <Typography variant="h4">Stake Apes</Typography>
-      <Typography variant="h6">Coming soon...</Typography>
-      <hr />
-      <Grid container spacing={1}>
-        {nfts.length > 0 &&
-          nfts.map((a: any, index: number) => {
-            return (
-              <div key={a.tokenId}>
-                <div key={index}>
-                  {account && (
-                    <UnStakedNFTCard stakeAddress={APES_STAKING_ADDR} nft={a} />
-                  )}
-                </div>
-              </div>
-            );
-          })}
-      </Grid>
+      <Typography variant="h4">Apes</Typography>
+      <Typography color="text.secondary">Coming soon</Typography>
+
+      <Box
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: 2,
+          mt: 2,
+          mb: 4,
+        }}
+      >
+        {account &&
+          nfts.length > 0 &&
+          nfts.map((a: any, index: number) => (
+            <UnStakedNFTCard
+              key={index}
+              stakeAddress={APES_STAKING_ADDR}
+              nft={a}
+            />
+          ))}
+      </Box>
     </div>
   );
 };

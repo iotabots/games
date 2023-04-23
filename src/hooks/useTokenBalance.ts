@@ -1,9 +1,7 @@
-// import useSWR from "swr";
-import { useWeb3React } from "@web3-react/core";
-import useKeepSWRDataLiveAsBlocksArrive from "./useKeepSWRDataLiveAsBlocksArrive";
-import useTokenContract from "./useTokenContract";
-import { useQuery, useMutation } from "@tanstack/react-query";
 import { ethers } from "ethers";
+import { useQuery } from "@tanstack/react-query";
+
+import useTokenContract from "./useTokenContract";
 
 export default function useTokenBalance(address: string, tokenAddress: string) {
   const contract = useTokenContract(tokenAddress);
@@ -25,12 +23,6 @@ export default function useTokenBalance(address: string, tokenAddress: string) {
         });
     },
   });
-
-  const mutation = useMutation({
-    mutationFn: () => query.refetch(),
-  });
-
-  useKeepSWRDataLiveAsBlocksArrive(mutation.mutateAsync);
 
   return query;
 }
