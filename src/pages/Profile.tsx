@@ -4,6 +4,7 @@ import Base from "../layouts/Base";
 import { Container, Typography } from "@mui/material";
 import { PoolShares } from "../components/PoolShares";
 import { useWeb3React } from "@web3-react/core";
+import Link from "next/link";
 
 export default function Profile() {
   const { library, account } = useWeb3React();
@@ -20,6 +21,7 @@ export default function Profile() {
         <Container maxWidth="md">
           <Typography variant="h1">Profile</Typography>
           {account && <PoolShares />}
+          <Link href={"/market"}>🥚</Link>
         </Container>
       </Base>
     </>
