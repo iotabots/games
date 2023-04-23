@@ -22,6 +22,7 @@ export default function Profile() {
           <Typography variant="h1">Profile</Typography>
           {account && <PoolShares />}
           <Link href={"/market"}>🥚</Link>
+          <Link href={"/quests"}>🥚</Link>
         </Container>
       </Base>
     </>

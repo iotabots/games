@@ -1,0 +1,31 @@
+import React from "react";
+import {
+  Card,
+  CardContent,
+  Typography,
+  CardActions,
+  Button,
+} from "@mui/material";
+import { ethers } from "ethers";
+
+const QuestCard = ({ quest, onSolve }: any) => {
+  return (
+    <Card>
+      <CardContent>
+        <Typography variant="h5" component="div">
+          {quest.description}
+        </Typography>
+        <Typography color="textSecondary">Points: {quest.points.toNumber()}</Typography>
+        <Typography color="textSecondary">
+          Required tokens: {quest.requiredTokenAmount}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Button size="small" onClick={() => onSolve(quest.id)}>
+          Solve
+        </Button>
+      </CardActions>
+    </Card>
+  );
+};
+export default QuestCard;
