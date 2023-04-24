@@ -8,11 +8,11 @@ const Leaderboard = ({ leaderboard }: any) => {
         Leaderboard
       </Typography>
       <List>
-        {leaderboard.map((player: any, index: number) => (
+        {leaderboard && leaderboard.length > 0 && leaderboard.map((player: any, index: number) => (
           <ListItem key={index}>
             <ListItemText
-              primary={`#${index + 1}. ${player.user}`}
-              secondary={`Points: ${player.points}`}
+              primary={`#${index + 1}. ${player?.user}`}
+              secondary={`Points: ${player?.points}`}
             />
           </ListItem>
         ))}
