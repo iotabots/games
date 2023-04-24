@@ -18,6 +18,8 @@ interface Quest {
   requiredTokenAddress: string;
   requiredTokenAmount: string;
   active: boolean;
+  solved: boolean;
+  userCanSolve: boolean;
 }
 
 interface Player {
@@ -29,6 +31,7 @@ export default function Quests() {
   const { library, account } = useWeb3React<Web3Provider>();
   const [quests, setQuests] = useState<Array<any>>([]);
   const [leaderboard, setLeaderboard] = useState<Array<any>>([]);
+  const [playerPoints, setPlayerPoints] = useState(0);
 
   useEffect(() => {
     if (!library) return;
@@ -46,21 +49,31 @@ export default function Quests() {
       QuestsABI.abi,
       signer
     );
+    const userPoints = await questContract.userPoints(account);
+    setPlayerPoints(userPoints.toNumber());
     const questCount = await questContract.nextQuestId();
     const fetchedQuests: Quest[] = [];
 
     for (let i = 0; i < questCount; i++) {
       const questData = await questContract.quests(i);
+      let userCanSolve = false;
+      try {
+        let data = await questContract.canSolveQuest(i);
+        console.log("data", data);
+        userCanSolve = data;
+      } catch (error) {}
+
       const quest: Quest = {
         id: questData.id,
         description: questData.description,
         points: questData.points,
         requiredTokenAddress: questData.requiredTokenAddress,
-        requiredTokenAmount: ethers.utils.formatEther(
-          questData.requiredTokenAmount
-        ),
+        requiredTokenAmount: questData.requiredTokenAmount,
         active: questData.active,
+        solved: false,
+        userCanSolve: userCanSolve,
       };
+      console.log("quest", quest);
       fetchedQuests.push(quest);
     }
 
@@ -86,9 +99,36 @@ export default function Quests() {
     setLeaderboard(leaderboard);
   }
 
-  const handleSolve = (questId: number) => {
-    // Implement your solve quest logic here
-    console.log(`Solve quest ${questId}`);
+  const handleSolve = async (questId: number) => {
+    if (!library) return;
+    const provider = new ethers.providers.Web3Provider(library.provider);
+    const signer = provider.getSigner();
+    const questContract = new ethers.Contract(
+      ADDRESSES.questsAddr,
+      QuestsABI.abi,
+      signer
+    );
+
+    try {
+      let tx = await questContract.completeQuest(questId, {
+        gasLimit: 1000000,
+      });
+
+      console.log(`Solve quest ${questId}`);
+
+      let recipe = await tx.wait();
+
+      console.log("recipe", recipe);
+
+      for (let index = 0; index < recipe.events.length; index++) {
+        const event = recipe.events[index];
+        if (event.event === "QuestCompleted") {
+          console.log("QuestCompleted", event);
+        }
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
   };
 
   return (
@@ -102,6 +142,7 @@ export default function Quests() {
       <Base>
         <Container maxWidth="md">
           <Typography variant="h1">Quests</Typography>
+          <Typography variant="h3">Points: {playerPoints}</Typography>
           <Container>
             <Box sx={{ marginTop: 4 }}>
               {quests.length <= 0 ? (

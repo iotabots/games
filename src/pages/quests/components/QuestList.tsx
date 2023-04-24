@@ -7,7 +7,7 @@ const QuestList = ({ quests, onSolve }: any) => {
     <Grid container spacing={4}>
       {quests.map((quest: any) => (
         <Grid item key={quest.id} xs={12} sm={6} md={4}>
-          <QuestCard quest={quest} onSolve={onSolve} />
+          <QuestCard quest={quest} onSolve={onSolve}/>
         </Grid>
       ))}
     </Grid>
