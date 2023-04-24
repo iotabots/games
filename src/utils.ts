@@ -1,8 +1,8 @@
-import NftStake from "../../../contracts/NftStake.json";
-import IERC721Enumerable from "../../../contracts/IERC721Enumerable.json";
+import NftStake from "./contracts/NftStake.json";
+import IERC721Enumerable from "./contracts/IERC721Enumerable.json";
 import { ethers } from "ethers";
 
-export const getStakedNFTs = async (
+const getStakedNFTs = async (
   library: any,
   contractAddr: any,
   account: string
@@ -27,7 +27,7 @@ export const getStakedNFTs = async (
   }
 };
 
-export async function loadNfts(
+const loadNfts = async function (
   library: any,
   contractAddr: any,
   account: string
@@ -53,4 +53,8 @@ export async function loadNfts(
     array.push(obj);
   }
   return array;
-}
+};
+
+const utils = { getStakedNFTs, loadNfts };
+
+export default utils

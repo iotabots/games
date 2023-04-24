@@ -7,7 +7,7 @@ interface MarketItem {
   price: number;
 }
 
-export function SellProduct({ nfts, createMarketItem }: any) {
+function SellProduct({ nfts, createMarketItem }: any) {
   const [selectedNft, setSelectedNft] = useState<MarketItem>({
     contractAddress: '',
     tokenId: 0,
@@ -60,3 +60,5 @@ export function SellProduct({ nfts, createMarketItem }: any) {
     </div>
   );
 }
+
+export default SellProduct;

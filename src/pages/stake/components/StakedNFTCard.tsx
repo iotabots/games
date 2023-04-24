@@ -20,7 +20,7 @@ interface Props {
   stakeAddress: string;
   nft: NftProps;
 }
-export const StakedNFTCard: React.FC<Props> = (props) => {
+const StakedNFTCard: React.FC<Props> = (props) => {
   const { stakeAddress, nft } = props;
 
   const { account, library } = useWeb3React();
@@ -108,3 +108,5 @@ export const StakedNFTCard: React.FC<Props> = (props) => {
     </>
   );
 };
+
+export default StakedNFTCard;

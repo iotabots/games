@@ -3,12 +3,12 @@ import { useWeb3React } from "@web3-react/core";
 import { useEffect, useState } from "react";
 
 import { ADDRESSES } from "../../../contracts/addresses";
-import { getStakedNFTs, loadNfts } from "./utils";
-import { UnStakedNFTCard } from "./UnStakedNFTCard";
-import { StakedNFTCard } from "./StakedNFTCard";
+import utils from "../../../utils";
+import UnStakedNFTCard from "./UnStakedNFTCard";
+import StakedNFTCard from "./StakedNFTCard";
 import useSoonabots from "../../../hooks/contracts/useSoonabots";
 
-export const StakeSoonabots = () => {
+const StakeSoonabots = () => {
   const { active, account, library } = useWeb3React();
   const [nfts, setNfts] = useState<any>([]);
   const [stakedNfts, setStakedNfts] = useState<any>([]);
@@ -17,10 +17,10 @@ export const StakeSoonabots = () => {
 
   useEffect(() => {
     if (active && account) {
-      loadNfts(library, ADDRESSES.soonabotsAddr, account).then((data) => {
+      utils.loadNfts(library, ADDRESSES.soonabotsAddr, account).then((data) => {
         setNfts(data);
       });
-      getStakedNFTs(library, ADDRESSES.soonabotsStakeAddr, account).then(
+      utils.getStakedNFTs(library, ADDRESSES.soonabotsStakeAddr, account).then(
         (data) => {
           setStakedNfts(data);
         }
@@ -64,3 +64,5 @@ export const StakeSoonabots = () => {
     </div>
   );
 };
+
+export default StakeSoonabots;

@@ -3,20 +3,20 @@ import { ethers } from "ethers";
 import { useWeb3React } from "@web3-react/core";
 import { Box, Typography } from "@mui/material";
 
-import { loadNfts } from "./utils";
-import { UnStakedNFTCard } from "./UnStakedNFTCard";
+import utils from "../../../utils";
+import UnStakedNFTCard from "./UnStakedNFTCard";
 
 const NFT_ADDR = "0xA1C16Aa93572326bCE72b923c1e27A35166876c3";
 const NFT_STAKING_ADDR = "";
 
-export const StakeIOTAHeros = () => {
+const StakeIOTAHeros = () => {
   const { active, account, library } = useWeb3React();
 
   const [nfts, setNfts] = useState<any>([]);
 
   useEffect(() => {
     if (active && account) {
-      loadNfts(library, NFT_ADDR, account).then((data) => {
+      utils.loadNfts(library, NFT_ADDR, account).then((data) => {
         loadMetadata(data);
       });
     }
@@ -67,3 +67,5 @@ export const StakeIOTAHeros = () => {
     </div>
   );
 };
+
+export default StakeIOTAHeros;

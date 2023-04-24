@@ -5,20 +5,20 @@ import { ethers } from "ethers";
 import axios from "axios";
 
 import IERC721Metadata from "../../../contracts/IERC721Metadata.json";
-import { loadNfts } from "./utils";
-import { UnStakedNFTCard } from "./UnStakedNFTCard";
+import utils from "../../../utils";
+import UnStakedNFTCard from "./UnStakedNFTCard";
 
 const APES_ADDR = "0xE3cA4D93277cDFf239032E08A7383ea6775b6A95";
 const APES_STAKING_ADDR = "";
 
-export const StakeApes = () => {
+const StakeApes = () => {
   const { active, account, library } = useWeb3React();
 
   const [nfts, setNfts] = useState<any>([]);
 
   useEffect(() => {
     if (active && account) {
-      loadNfts(library, APES_ADDR, account).then((data) => {
+      utils.loadNfts(library, APES_ADDR, account).then((data) => {
         loadMetadata(data);
       });
     }
@@ -83,3 +83,5 @@ export const StakeApes = () => {
     </div>
   );
 };
+
+export default StakeApes;

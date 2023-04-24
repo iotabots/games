@@ -6,7 +6,7 @@ import NFTMarketABI from "../../../contracts/NFTMarket.json";
 import {ADDRESSES} from "../../../contracts/addresses";
 import { useWeb3React } from "@web3-react/core";
 
-export function MarketItems() {
+function MarketItems() {
   const [marketItems, setMarketItems] = useState([]);
   const { account, library } = useWeb3React();
 
@@ -72,3 +72,5 @@ export function MarketItems() {
     </div>
   );
 }
+
+export default MarketItems;

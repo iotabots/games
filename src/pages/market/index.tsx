@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 
 import { ethers } from "ethers";
 
-import { SellProduct } from "./components/SellProduct";
-import { MarketItems } from "./components/MarketItems";
+import SellProduct from "./components/SellProduct";
+import MarketItems from "./components/MarketItems";
 
 import IERC721Enumerable from "../../contracts/IERC721Enumerable.json";
 import NFTMarketABI from "../../contracts/NFTMarket.json";

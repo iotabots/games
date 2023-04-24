@@ -15,7 +15,7 @@ import Rank from "../../../components/Rank";
 
 const eggsTokenAddress = "0xdFCF738225F6508F7A664c3c7D236432501e16d4"; // Test Token
 
-export const SoonabotRacing = () => {
+const SoonabotRacing = () => {
   const { account, library } = useWeb3React();
 
   const { data, isFetched, error, refetch } = useSoonabots(
@@ -211,3 +211,6 @@ export const SoonabotRacing = () => {
     </Box>
   );
 };
+
+
+export default SoonabotRacing;

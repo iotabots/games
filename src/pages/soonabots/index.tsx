@@ -4,7 +4,7 @@ import Base from "../../layouts/Base";
 import { Container } from "@mui/material";
 import Hero from "../../components/Hero";
 import { GAMES } from "../../mocks/games";
-import { SoonabotRacing } from "./components/SoonabotRacing";
+import SoonabotRacing from "./components/SoonabotRacing";
 import { useWeb3React } from "@web3-react/core";
 
 export default function Soonabots() {

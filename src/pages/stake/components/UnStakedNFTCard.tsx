@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useWeb3React } from "@web3-react/core";
 
-import { StakeButton } from "./StakeButton";
+import StakeButton from "./StakeButton";
 import StakingCard from "../../../components/StakingCard";
 
 interface NftProps {
@@ -13,7 +13,7 @@ interface Props {
   stakeAddress: string;
   nft: NftProps;
 }
-export const UnStakedNFTCard: React.FC<Props> = (props) => {
+const UnStakedNFTCard: React.FC<Props> = (props) => {
   const { nft, stakeAddress } = props;
 
   const { account } = useWeb3React();
@@ -30,3 +30,5 @@ export const UnStakedNFTCard: React.FC<Props> = (props) => {
     </>
   );
 };
+
+export default UnStakedNFTCard;

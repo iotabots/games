@@ -19,7 +19,7 @@ interface Props {
   nft: NftProps;
 }
 
-export const StakeButton: React.FC<Props> = (props) => {
+const StakeButton: React.FC<Props> = (props) => {
   const { nft, stakeAddress } = props;
 
   const [nftStake, setNftStake] = useState<any>(null);
@@ -79,3 +79,5 @@ export const StakeButton: React.FC<Props> = (props) => {
     </Box>
   );
 };
+
+export default StakeButton;
