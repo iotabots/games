@@ -99,7 +99,7 @@ export default function Home() {
                     color="secondary"
                     variant="contained"
                   >
-                    Get Shimmer (SMR)
+                    Get Test Shimmer (SMR)
                   </Button>
                 </Link>
               </Box>

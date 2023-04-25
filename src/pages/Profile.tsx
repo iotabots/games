@@ -21,6 +21,26 @@ export default function Profile() {
         <Container maxWidth="md">
           <Typography variant="h1">Profile</Typography>
           {account && <PoolShares />}
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
           <Link href={"/market"}>🥚</Link>
           <Link href={"/quests"}>🥚</Link>
         </Container>

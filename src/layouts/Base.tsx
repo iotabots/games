@@ -5,6 +5,8 @@ import { Box, CssBaseline } from "@mui/material";
 
 import { Header } from "../components/Header";
 import { Network } from "../components/Network";
+import MatrixModal from "../components/MatrixModal";
+import { useRouter } from "next/router";
 
 interface Props {
   hero?: React.ReactNode;
@@ -14,6 +16,8 @@ interface Props {
 const inter = Inter({ subsets: ["latin"] });
 
 const Base: React.FC<Props> = ({ children, hero }) => {
+  const router = useRouter();
+
   return (
     <main className={inter.className}>
       <Box sx={styles} className={hero ? "hero" : ""}>
@@ -21,6 +25,7 @@ const Base: React.FC<Props> = ({ children, hero }) => {
         <Header />
         {hero}
         {children}
+        {router.pathname === "/" && <MatrixModal />}
         <Network />
       </Box>
     </main>

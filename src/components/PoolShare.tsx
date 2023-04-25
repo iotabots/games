@@ -5,8 +5,9 @@ import { useWeb3React } from "@web3-react/core";
 import { ethers } from "ethers";
 import { ADDRESSES } from "../contracts/addresses";
 import TokenABI from "../contracts/Token.json";
+import Link from "next/link";
 
-export const PoolShare = ({ lpAddress }: any) => {
+export const PoolShare = ({ pool }: any) => {
   const { library, account } = useWeb3React();
   const [balance, setBalance] = useState("0");
   const [totalSupply, setTotalSupply] = useState("0");
@@ -16,12 +17,13 @@ export const PoolShare = ({ lpAddress }: any) => {
     if (account) {
       fetchBalance();
     }
-    console.log("PoolShare", lpAddress);
-  }, [lpAddress]);
+    console.log("PoolShare", pool);
+  }, [pool]);
 
   const fetchBalance = async () => {
+    if(!pool) return;
     const provider = new ethers.providers.Web3Provider(library.provider);
-    const contract = new ethers.Contract(lpAddress, TokenABI, provider);
+    const contract = new ethers.Contract(pool.address, TokenABI, provider);
     let _balance = await contract.balanceOf(account);
     console.log("balance", _balance);
     setBalance(ethers.utils.formatEther(_balance));
@@ -37,6 +39,8 @@ export const PoolShare = ({ lpAddress }: any) => {
       <Typography color="text.secondary">Balance: {balance}</Typography>
       <Typography color="text.secondary">totalSupply: {totalSupply}</Typography>
       <Typography color="text.secondary">shares: {shares}%</Typography>
+      <Typography color="text.secondary">lp address: {pool?.address}</Typography>
+      { pool?.link && <Link target="_blank" href={pool?.link}>Link to pool</Link>}
     </>
   ) : (
     <></>

@@ -17,10 +17,11 @@ interface NftProps {
 interface Props {
   stakeAddress: string;
   nft: NftProps;
+  disabled: boolean;
 }
 
 const StakeButton: React.FC<Props> = (props) => {
-  const { nft, stakeAddress } = props;
+  const { nft, stakeAddress, disabled } = props;
 
   const [nftStake, setNftStake] = useState<any>(null);
   const [message, setMessage] = useState("");
@@ -70,9 +71,15 @@ const StakeButton: React.FC<Props> = (props) => {
   return (
     <Box>
       <Box>
-        <Button variant="contained" onClick={stakeNFT}>
-          Stake NFT
-        </Button>
+        {disabled ? (
+          <Button disabled={disabled} variant="contained">
+            Stake Soon
+          </Button>
+        ) : (
+          <Button disabled={disabled} variant="contained" onClick={stakeNFT}>
+            Stake NFT
+          </Button>
+        )}
       </Box>
 
       {message && <Typography variant="body1">{message}</Typography>}

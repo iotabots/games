@@ -4,10 +4,11 @@ import { Box, Typography, Skeleton } from "@mui/material";
 interface Props {
   label: string;
   value?: string | null;
+  symbol?: string | null;
 }
 
 const KPI: React.FC<Props> = (props) => {
-  const { label, value } = props;
+  const { label, value, symbol } = props;
   return (
     <Box sx={styles.card}>
       <Typography color="text.secondary" fontSize={14} mt={0}>
@@ -23,7 +24,7 @@ const KPI: React.FC<Props> = (props) => {
           fontSize={12}
           color="text.secondary"
         >
-          EGGS
+          {symbol}
         </Typography>
       </Box>
     </Box>

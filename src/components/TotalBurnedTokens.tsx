@@ -32,7 +32,7 @@ const TotalBurnedTokens = () => {
     }
   }, [library, tokenAddress]);
 
-  return <KPI label="Total Burned Tokens" value={totalBurnedTokens} />;
+  return <KPI label="Total Burned Tokens" value={totalBurnedTokens} symbol="EGGS" />;
 };
 
 export default TotalBurnedTokens;

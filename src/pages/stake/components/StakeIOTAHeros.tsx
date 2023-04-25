@@ -40,7 +40,7 @@ const StakeIOTAHeros = () => {
 
   return (
     <div>
-      <Typography variant="h4">Soonabots</Typography>
+      <Typography variant="h4">IOTA Heroes</Typography>
       <Typography color="text.secondary">Coming soon</Typography>
       <Box
         sx={{
@@ -57,7 +57,11 @@ const StakeIOTAHeros = () => {
               <div key={a.tokenId}>
                 <div key={index}>
                   {account && (
-                    <UnStakedNFTCard stakeAddress={NFT_STAKING_ADDR} nft={a} />
+                    <UnStakedNFTCard
+                      stakeAddress={NFT_STAKING_ADDR}
+                      nft={a}
+                      disabled={true}
+                    />
                   )}
                 </div>
               </div>

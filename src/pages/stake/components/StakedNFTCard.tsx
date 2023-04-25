@@ -99,7 +99,7 @@ const StakedNFTCard: React.FC<Props> = (props) => {
       {nft && (
         <StakingCard
           image={nft?.url}
-          name={`Soonabot #${nft.tokenId}`}
+          name={`#${nft.tokenId}`}
           description={`Earned: ${ethers.utils.formatEther(earned)} EGGS`}
           onHarvest={harvest}
           onUnStake={unStakeNFT}

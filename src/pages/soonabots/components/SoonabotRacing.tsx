@@ -189,7 +189,7 @@ const SoonabotRacing = () => {
           }}
         >
           {races.map((race, index) => {
-            const bots = race[0].map((bot: any) => `#${bot} `);
+            const bots = race[0].map((bot: any) => ` #${bot}`);
             const winner = race[0].map((bot: any) =>
               race[2].toNumber() === bot.toNumber() ? String(bot) : ""
             );

@@ -77,7 +77,11 @@ const StakeLilApes = () => {
               <div key={a.tokenId}>
                 <div key={index}>
                   {account && (
-                    <UnStakedNFTCard stakeAddress={NFT_STAKING_ADDR} nft={a} />
+                    <UnStakedNFTCard
+                      stakeAddress={NFT_STAKING_ADDR}
+                      nft={a}
+                      disabled={true}
+                    />
                   )}
                 </div>
               </div>

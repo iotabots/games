@@ -12,9 +12,10 @@ interface NftProps {
 interface Props {
   stakeAddress: string;
   nft: NftProps;
+  disabled: boolean;
 }
 const UnStakedNFTCard: React.FC<Props> = (props) => {
-  const { nft, stakeAddress } = props;
+  const { nft, stakeAddress, disabled } = props;
 
   const { account } = useWeb3React();
 
@@ -22,9 +23,9 @@ const UnStakedNFTCard: React.FC<Props> = (props) => {
     <>
       {account && (
         <StakingCard
-          name={`Soonabot #${nft?.tokenId}`}
+          name={`#${nft?.tokenId}`}
           image={nft?.url}
-          stakeButton={<StakeButton nft={nft} stakeAddress={stakeAddress} />}
+          stakeButton={<StakeButton nft={nft} stakeAddress={stakeAddress} disabled={disabled} />}
         />
       )}
     </>

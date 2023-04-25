@@ -77,6 +77,7 @@ const StakeApes = () => {
               key={index}
               stakeAddress={APES_STAKING_ADDR}
               nft={a}
+              disabled={true}
             />
           ))}
       </Box>

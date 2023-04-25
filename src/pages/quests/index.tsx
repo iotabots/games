@@ -1,7 +1,7 @@
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import Base from "../../layouts/Base";
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Button, Container, Modal, Typography } from "@mui/material";
 import { useWeb3React } from "@web3-react/core";
 import QuestList from "./components/QuestList";
 import Leaderboard from "./components/Leaderboard";
@@ -27,11 +27,26 @@ interface Player {
   points: number;
 }
 
+const style = {
+  position: "absolute" as "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  pt: 2,
+  px: 4,
+  pb: 3,
+};
+
 export default function Quests() {
   const { library, account } = useWeb3React<Web3Provider>();
   const [quests, setQuests] = useState<Array<any>>([]);
   const [leaderboard, setLeaderboard] = useState<Array<any>>([]);
   const [playerPoints, setPlayerPoints] = useState(0);
+  const [open, setOpen] = React.useState(false);
 
   useEffect(() => {
     if (!library) return;
@@ -124,6 +139,7 @@ export default function Quests() {
         const event = recipe.events[index];
         if (event.event === "QuestCompleted") {
           console.log("QuestCompleted", event);
+          setOpen(true);
         }
       }
     } catch (error) {
@@ -131,11 +147,18 @@ export default function Quests() {
     }
   };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <>
       <Head>
         <title>Quests</title>
-        <meta name="description" content="Join the Treasures of Shimmer. Do quests and climb the leaderboard!" />
+        <meta
+          name="description"
+          content="Join the Treasures of Shimmer. Do quests and climb the leaderboard!"
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -155,11 +178,26 @@ export default function Quests() {
               {quests.length <= 0 ? (
                 "Loading leaderboard..."
               ) : (
-                <Leaderboard leaderboard={leaderboard || []} />
+                <Leaderboard leaderboard={leaderboard} />
               )}
             </Box>
           </Container>
         </Container>
+
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="parent-modal-title"
+          aria-describedby="parent-modal-description"
+        >
+          <Box sx={{ ...style, width: 400 }}>
+            <h2 id="parent-modal-title">Quest Solved!</h2>
+            <p id="parent-modal-description">
+              Awesome, you just solved a quest!
+            </p>
+            <Button onClick={handleClose}>Okay!</Button>
+          </Box>
+        </Modal>
       </Base>
     </>
   );

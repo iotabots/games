@@ -32,7 +32,7 @@ const StakeSoonabots = () => {
   return (
     <div>
       <Typography variant="h4">Soonabots</Typography>
-      <Typography color="text.secondary">Coming soon</Typography>
+      <Typography color="text.secondary">Available now!</Typography>
       <Box
         sx={{
           display: "flex",
@@ -58,6 +58,7 @@ const StakeSoonabots = () => {
               key={index}
               stakeAddress={ADDRESSES.soonabotsStakeAddr}
               nft={a}
+              disabled={false}
             />
           ))}
       </Box>
