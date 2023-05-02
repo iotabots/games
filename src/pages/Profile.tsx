@@ -41,8 +41,19 @@ export default function Profile() {
           <br />
           <br />
           <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
           <Link href={"/market"}>🥚</Link>
           <Link href={"/quests"}>🥚</Link>
+          <Link href={"/eggsFarm"}>🥚</Link>
         </Container>
       </Base>
     </>

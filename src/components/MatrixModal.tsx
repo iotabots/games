@@ -16,13 +16,12 @@ const Backdrop = styled("div")(({ theme }) => ({
 
 const MatrixModal: React.FC = () => {
   const [open, setOpen] = useState(false);
-  const [letters, setLetters] = useState("");
+  const [firstText, setFirstText] = useState("");
+  const [secondText, setSecondText] = useState("Welcome to the 🤖 Multiverse!");
   const textRef = useRef<HTMLDivElement>(null);
   const { library, account } = useWeb3React();
   const [showSecondAnimation, setShowSecondAnimation] = useState(false);
 
-  const firstText = "Hello " + account?.slice(0, 6) + ",";
-  const secondText = "Welcome to the Matrix!";
   const intervalSpeed = 150;
   const firstMatrixText = useMatrixText({
     targetText: firstText,
@@ -37,6 +36,7 @@ const MatrixModal: React.FC = () => {
   useEffect(() => {
     if (account && !open) {
       //if (!textRef.current) return;
+      setFirstText("Hello " + account?.slice(0, 6) + ",");
       setOpen(true);
     }
   }, [account]);
