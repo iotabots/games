@@ -9,7 +9,7 @@ import { ADDRESSES } from "../contracts/addresses";
 
 const BurnTokens = () => {
   const { library, active } = useWeb3React();
-  const [amount, setAmount] = useState<number>(0);
+  const [amount, setAmount] = useState<number>(10);
   const [status, setStatus] = useState("");
 
   const contractAddress = ADDRESSES.eggsBurnAddr;
@@ -27,6 +27,12 @@ const BurnTokens = () => {
       return;
     }
 
+    try {
+      await approveContract();
+    } catch (error: any) {
+      setStatus(`Error: ${error.message}`);
+    }
+
     const signer = provider.getSigner();
     const contract = new ethers.Contract(contractAddress, abi, signer);
 
@@ -37,7 +43,7 @@ const BurnTokens = () => {
       );
       setStatus("Transaction sent, waiting for confirmation...");
       await tx.wait();
-      setStatus("Transaction confirmed, tokens burned");
+      setStatus("Transaction confirmed, tokens burned! 🔥");
     } catch (error: any) {
       setStatus(`Error: ${error.message}`);
     }
@@ -91,18 +97,10 @@ const BurnTokens = () => {
           />
           <Button
             variant="contained"
-            onClick={approveContract}
-            disabled={amount <= 0}
-          >
-            Approve Contract
-          </Button>
-
-          <Button
-            variant="contained"
             disabled={amount <= 0}
             onClick={burnTokens}
           >
-            Burn Tokens
+            Burn Tokens 🔥
           </Button>
         </Box>
       )}
