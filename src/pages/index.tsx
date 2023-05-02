@@ -19,7 +19,10 @@ export default function Home() {
     <>
       <Head>
         <title>IOTABOTS GAMES</title>
-        <meta name="description" content="Enter the Multiverse of the IOTABOTS Ecosystem. Play Games, trade NFTs and join the IOTABOTS Community!" />
+        <meta
+          name="description"
+          content="Enter the Multiverse of the IOTABOTS Ecosystem. Play Games, trade NFTs and join the IOTABOTS Community!"
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -163,6 +166,7 @@ export default function Home() {
 const styles = {
   games: {
     display: "flex",
-    gap: 6,
+    flexDirection: { xs: "column", sm: "row" },
+    gap: { xs: 4, sm: 6 },
   },
 };

@@ -21,6 +21,7 @@ import Hero from "../../components/Hero";
 import Rules from "./components/Rules";
 import HowItWorks from "./components/HowItWorks";
 import Burn from "./components/Burn";
+import ConnectSection from "../../components/ConnectSection";
 
 interface Bot {
   attributes: Array<object>;
@@ -89,73 +90,83 @@ export default function Iotabots() {
     <>
       <Head>
         <title>IOTABOTS</title>
-        <meta name="description" content="The first PFP NFTs on IOTA and Shimmer." />
+        <meta
+          name="description"
+          content="The first PFP NFTs on IOTA and Shimmer."
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
       <Base hero={<Hero image={GAMES[0].image} />}>
-        <Container maxWidth="md">
-          <Box
-            sx={{
-              display: "flex",
-              gap: 4,
-              flexWrap: "wrap",
-            }}
-          >
-            <Box sx={{ flex: 1 }}>
-              <Typography variant="h3" sx={{ mb: 1 }}>
-                Rock, Paper, Scissors
-              </Typography>
-              <Typography color="text.secondary" sx={{ mb: 3 }}>
-                Play now against your IOTABOTS and collect EGGS from wining
-                Rock, Paper, Scissors against them. Good luck!
-              </Typography>
-              {account && library.provider && (
-                <Balance
-                  playerBalance={playerTokens}
-                  totalSupply={tokenSupply}
-                  account={account}
-                />
-              )}
-              <Box sx={{ textAlign: "center" }}>
-                {bots &&
-                  bots.map(({ image, name, edition }, index) => (
-                    <Bot
-                      key={index}
-                      id={edition}
-                      image={image}
-                      name={name}
-                      refetchGame={loadGame}
+        {active ? (
+          <>
+            <Container maxWidth="md">
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 4,
+                  flexWrap: "wrap",
+                }}
+              >
+                <Box sx={{ flex: 1 }}>
+                  <Typography variant="h3" sx={{ mb: 1 }}>
+                    Rock, Paper, Scissors
+                  </Typography>
+                  <Typography color="text.secondary" sx={{ mb: 3 }}>
+                    Play now against your IOTABOTS and collect EGGS from wining
+                    Rock, Paper, Scissors against them. Good luck!
+                  </Typography>
+                  {account && library.provider && (
+                    <Balance
+                      playerBalance={playerTokens}
+                      totalSupply={tokenSupply}
+                      account={account}
                     />
-                  ))}
-                {!bots && <BotLoading />}
+                  )}
+                  <Box sx={{ textAlign: "center" }}>
+                    {bots &&
+                      bots.map(({ image, name, edition }, index) => (
+                        <Bot
+                          key={index}
+                          id={edition}
+                          image={image}
+                          name={name}
+                          refetchGame={loadGame}
+                        />
+                      ))}
+                    {!bots && <BotLoading />}
+                  </Box>
+                </Box>
+                <Box sx={{ flex: 1 }}>
+                  <Rules />
+                </Box>
               </Box>
-            </Box>
-            <Box sx={{ flex: 1 }}>
-              <Rules />
-            </Box>
-          </Box>
-        </Container>
+            </Container>
 
-        <Container sx={{ mt: 6 }} maxWidth="md">
-          <Burn />
+            <Container sx={{ mt: 6 }} maxWidth="md">
+              <Burn />
 
-          <Box sx={{ my: 6 }}>
-            <Typography variant="h3" sx={{ mb: 1 }}>
-              Leaderboard
-            </Typography>
-            <Typography color="text.secondary" sx={{ mb: 3 }}>
-              These are the honorful top 10 burners. Go a head and burn some
-              yourself to show up here.
-            </Typography>
-            {active && <Leaderboard top={10} />}
-          </Box>
+              <Box sx={{ my: 6 }}>
+                <Typography variant="h3" sx={{ mb: 1 }}>
+                  Leaderboard
+                </Typography>
+                <Typography color="text.secondary" sx={{ mb: 3 }}>
+                  These are the honorful top 10 burners. Go a head and burn some
+                  yourself to show up here.
+                </Typography>
+                {active && <Leaderboard top={10} />}
+              </Box>
 
-          <HowItWorks />
-        </Container>
+              <HowItWorks />
+            </Container>
+          </>
+        ) : (
+          <Container maxWidth="md">
+            <ConnectSection />
+          </Container>
+        )}
       </Base>
     </>
   );
 }
-
-const styles = {};

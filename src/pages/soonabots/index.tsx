@@ -6,6 +6,7 @@ import Hero from "../../components/Hero";
 import { GAMES } from "../../mocks/games";
 import SoonabotRacing from "./components/SoonabotRacing";
 import { useWeb3React } from "@web3-react/core";
+import ConnectSection from "../../components/ConnectSection";
 
 export default function Soonabots() {
   const { account } = useWeb3React();
@@ -14,12 +15,17 @@ export default function Soonabots() {
     <>
       <Head>
         <title>Soonabots</title>
-        <meta name="description" content="Soonabots Race - a web3 Game for Soonabots NFTs." />
+        <meta
+          name="description"
+          content="Soonabots Race - a web3 Game for Soonabots NFTs."
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Base hero={<Hero image={GAMES[1].image} />}>
-        <Container maxWidth="md">{account && <SoonabotRacing />}</Container>
+        <Container maxWidth="md">
+          {account ? <SoonabotRacing /> : <ConnectSection />}
+        </Container>
       </Base>
     </>
   );

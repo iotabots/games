@@ -54,7 +54,8 @@ const StakeButton: React.FC<Props> = (props) => {
           NftArtifact.abi,
           signer
         );
-        await soonabotsContract.approve(stakeAddress, nft.tokenId);
+        const tx = await soonabotsContract.approve(stakeAddress, nft.tokenId);
+        await tx.wait();
         const result = await nftStake.stakeNFT([nft.tokenId]);
         setMessage(`🎉 Successfully staked NFT with ID ${nft.tokenId}!`);
         console.log("NFT staked:", result);

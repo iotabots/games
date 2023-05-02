@@ -12,7 +12,7 @@ const MenuItem: React.FC<MenuItemProps> = (props) => {
   const { label, href } = props;
   const { pathname } = useRouter();
 
-  const active = pathname.includes(href);
+  const active = pathname === href;
 
   return (
     <Link href={href}>

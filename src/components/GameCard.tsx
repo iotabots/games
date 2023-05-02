@@ -6,11 +6,12 @@ interface Props {
   id: number;
   name: string;
   description: string;
+  link: string;
   image: string;
 }
 
 const GameCard: React.FC<Props> = (props) => {
-  const { name, description, image } = props;
+  const { name, description, link, image } = props;
 
   return (
     <Box className="game-card" sx={styles.root}>
@@ -24,7 +25,7 @@ const GameCard: React.FC<Props> = (props) => {
       <Box className="game-card__content" sx={styles.content}>
         <Typography variant="h4">{name}</Typography>
         <Typography sx={{ mb: 2 }}>{description}</Typography>
-        <Button variant="contained" size="large">
+        <Button href={link} variant="contained" size="large">
           Play now
         </Button>
       </Box>

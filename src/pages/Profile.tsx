@@ -1,10 +1,12 @@
-import Head from "next/head";
 import React from "react";
-import Base from "../layouts/Base";
-import { Container, Typography } from "@mui/material";
-import { PoolShares } from "../components/PoolShares";
-import { useWeb3React } from "@web3-react/core";
+import Head from "next/head";
 import Link from "next/link";
+import { useWeb3React } from "@web3-react/core";
+
+import { Container, Typography } from "@mui/material";
+import Base from "../layouts/Base";
+import { PoolShares } from "../components/PoolShares";
+import ConnectSection from "../components/ConnectSection";
 
 export default function Profile() {
   const { library, account } = useWeb3React();
@@ -19,41 +21,10 @@ export default function Profile() {
       </Head>
       <Base>
         <Container maxWidth="md">
-          <Typography variant="h1">Profile</Typography>
-          {account && <PoolShares />}
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <Link href={"/market"}>🥚</Link>
-          <Link href={"/quests"}>🥚</Link>
-          <Link href={"/eggsFarm"}>🥚</Link>
+          <Typography variant="h1" gutterBottom>
+            Profile
+          </Typography>
+          {account ? <PoolShares /> : <ConnectSection />}
         </Container>
       </Base>
     </>
