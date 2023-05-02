@@ -1,0 +1,1 @@
+@keyframes matrixRain{0%{opacity:.7;transform:translateY(0)}to{opacity:0;transform:translateY(100%)}}.matrixRain{font-family:matrix;font-size:16px;color:#0f3;position:fixed;opacity:.2;z-index:-1000;animation:matrixRain 1s linear infinite}a{text-decoration:none}h1{font-family:Matrix}
