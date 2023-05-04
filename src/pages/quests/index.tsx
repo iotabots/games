@@ -7,6 +7,7 @@ import QuestList from "./components/QuestList";
 import Leaderboard from "./components/Leaderboard";
 import { Web3Provider } from "@ethersproject/providers";
 import QuestsABI from "../../contracts/Quests.json";
+import IERC20 from "../../contracts/IERC20.json";
 import { ADDRESSES } from "../../contracts/addresses";
 import { ethers } from "ethers";
 
@@ -20,6 +21,7 @@ interface Quest {
   active: boolean;
   solved: boolean;
   userCanSolve: boolean;
+  balance: number;
 }
 
 interface Player {
@@ -47,12 +49,12 @@ export default function Quests() {
   const [leaderboard, setLeaderboard] = useState<Array<any>>([]);
   const [playerPoints, setPlayerPoints] = useState(0);
   const [open, setOpen] = React.useState(false);
-
+  console.log("quests", quests);
   useEffect(() => {
     if (!library) return;
     if (!account) return;
     fetchQuests();
-    fetchLeaderboard();
+    // fetchLeaderboard();
   }, [library, account]);
 
   const fetchQuests = async () => {
@@ -64,35 +66,73 @@ export default function Quests() {
       QuestsABI.abi,
       signer
     );
-    const userPoints = await questContract.userPoints(account);
-    setPlayerPoints(userPoints.toNumber());
-    const questCount = await questContract.nextQuestId();
-    const fetchedQuests: Quest[] = [];
-
-    for (let i = 0; i < questCount; i++) {
-      const questData = await questContract.quests(i);
-      let userCanSolve = false;
-      try {
-        let data = await questContract.canSolveQuest(i);
-        console.log("data", data);
-        userCanSolve = data;
-      } catch (error) {}
-
-      const quest: Quest = {
-        id: questData.id,
-        description: questData.description,
-        points: questData.points,
-        requiredTokenAddress: questData.requiredTokenAddress,
-        requiredTokenAmount: questData.requiredTokenAmount,
-        active: questData.active,
-        solved: false,
-        userCanSolve: userCanSolve,
-      };
-      console.log("quest", quest);
-      fetchedQuests.push(quest);
+    try {
+      const userPoints = await questContract.userPoints(account);
+      setPlayerPoints(userPoints.toNumber());
+    } catch (error) {
+      console.log("error userPoints", error);
     }
+    try {
+      const questCount = await questContract.nextQuestId();
+      const fetchedQuests: Quest[] = [];
+      for (let i = 0; i < questCount; i++) {
+        const questData = await questContract.quests(i);
+        let userCanSolve = false;
+        try {
+          let data = await questContract.canSolveQuest(i);
+          console.log("data", data);
+          userCanSolve = data;
+        } catch (error) {
+          console.log("error canSolveQuest", error);
+        }
 
-    setQuests(fetchedQuests);
+        let balance = false;
+        try {
+          const tokenContract = new ethers.Contract(
+            questData.requiredTokenAddress,
+            IERC20.abi,
+            signer
+          );
+          let data = await tokenContract.balanceOf(account);
+          console.log(
+            "requiredTokenAmount",
+            questData.requiredTokenAmount.toNumber()
+          );
+          console.log("balance", data);
+          console.log("balance toNumber", data?.toNumber());
+          balance = data?.toNumber() || -1;
+        } catch (error) {
+          console.log("error balance", error);
+        }
+
+        console.log(
+          "questData",
+          questData.description,
+          ": ",
+          userCanSolve,
+          ": ",
+          balance
+        );
+
+        const quest: Quest = {
+          id: questData.id,
+          description: questData.description,
+          points: questData.points,
+          requiredTokenAddress: questData.requiredTokenAddress,
+          requiredTokenAmount: questData.requiredTokenAmount,
+          active: questData.active,
+          solved: false,
+          userCanSolve: userCanSolve,
+          balance: -1,
+        };
+        console.log("quest", quest);
+        fetchedQuests.push(quest);
+      }
+
+      setQuests(fetchedQuests);
+    } catch (error) {
+      console.log("error", error);
+    }
   };
 
   async function fetchLeaderboard() {
@@ -174,13 +214,13 @@ export default function Quests() {
                 <QuestList quests={quests || []} onSolve={handleSolve} />
               )}
             </Box>
-            <Box sx={{ marginTop: 4 }}>
+            {/* <Box sx={{ marginTop: 4 }}>
               {quests.length <= 0 ? (
                 "Loading leaderboard..."
               ) : (
                 <Leaderboard leaderboard={leaderboard} />
               )}
-            </Box>
+            </Box> */}
           </Container>
         </Container>
 
