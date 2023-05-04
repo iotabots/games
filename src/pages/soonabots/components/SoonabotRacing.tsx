@@ -119,9 +119,9 @@ const SoonabotRacing = () => {
           <Typography variant="h3" sx={{ mb: 1 }}>
             Soonabots
           </Typography>
-          <Countdown targetDate={treasuryEventStartDate} />
+          {/* <Countdown targetDate={treasuryEventStartDate} /> */}
           <Typography color="text.secondary" sx={{ mb: 3 }}>
-            The leaderboard will reset and the real test race starts.
+            Do a race with your SOONABOT 🤖
           </Typography>
 
           <Typography>{message}</Typography>
@@ -211,6 +211,5 @@ const SoonabotRacing = () => {
     </Box>
   );
 };
-
 
 export default SoonabotRacing;
